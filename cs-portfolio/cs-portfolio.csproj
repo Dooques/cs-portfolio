@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>cs_portfolio</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Repository\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\sam.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Hangulizer">
+      <HintPath>Projects\Hangulizer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
