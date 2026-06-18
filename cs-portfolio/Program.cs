@@ -1,13 +1,14 @@
-namespace cs_portfolio
+namespace csPortfolio
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
             var app = builder.Build();
 
@@ -30,7 +31,7 @@ namespace cs_portfolio
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

@@ -1,13 +1,13 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace cs_portfolio.Controllers
+namespace csPortfolio.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class HomeController : Controller
     {
         [HttpGet]
+        [Route("/")]
         public IActionResult Index()
         {
             return View();

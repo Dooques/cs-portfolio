@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Hangulizer.Service;
 using Hangulizer.Data;
-using cs_portfolio.Models;
+using csPortfolio.Models;
 
-namespace cs_portfolio.Controllers
+namespace csPortfolio.Controllers
 {
     [ApiController]
     public class HangulController: ControllerBase
