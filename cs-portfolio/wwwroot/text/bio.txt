@@ -1,2 +1,0 @@
-In 2023 I began my journey with software development, igniting a fire in my heart for creating beautiful user experiences and backend systems. I especially enjoy projects that bring joy to people’s lives and help improve communities.
-Taking my skills to the next level, I enrolled at Northcoders, deepening the experience I’ve gained over the last few years of self driven learning, and funneling my experience as a Mobile App Developer with Kotlin into developing enterprise applications with C# and the .NET framework.
