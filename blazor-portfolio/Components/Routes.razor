@@ -1,0 +1,17 @@
+﻿@using blazor_portfolio.Components.Pages
+<Blazorise.ThemeProvider Theme="@_theme">
+    <Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(NotFound)">
+        <Found Context="routeData">
+            <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)"/>
+            <FocusOnNavigate RouteData="routeData" Selector="h1"/>
+        </Found>
+    </Router>
+</Blazorise.ThemeProvider>
+
+
+@code {
+    private readonly Theme _theme = new Theme
+    {
+        
+    };
+}
