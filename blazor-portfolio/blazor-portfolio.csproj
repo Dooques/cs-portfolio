@@ -22,4 +22,8 @@
       <PackageReference Include="Blazorise.Icons.FontAwesome" Version="2.2.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Hangulizer\Hangulizer\Hangulizer.csproj" />
+    </ItemGroup>
+
 </Project>

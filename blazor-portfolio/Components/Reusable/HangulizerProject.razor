@@ -1,0 +1,56 @@
+﻿@using Hangulizer.Data
+@using Hangulizer.Service
+
+<Div Flex="Flex.Column.JustifyContent.Center.AlignItems.Start"
+     Margin="Margin.Is4.OnX">
+    
+    <Heading3>
+        Hangulizer
+    </Heading3>
+
+    <Paragraph>
+        This project is a .NET console application that translates Korean characters into english phonetics.
+    </Paragraph>
+
+    <Fields ColumnSize="ColumnSize.IsAuto">
+        <Field>
+            <FieldLabel>Translate hangul characters!</FieldLabel>
+            <FieldBody>
+                <MemoInput Placeholder="Type korean characters here..."
+                           Rows="2"
+                           @bind-Value="@HangulText"
+                           AutoSize
+                           Style="resize: none;"/>
+            </FieldBody>
+        </Field>
+
+        <Button Margin="Margin.Is2.OnY"
+                Color="Color.Primary"
+                Clicked="@HandleClick">
+            Translate Now
+        </Button>
+
+        <Field>
+            <FieldLabel>Results!</FieldLabel>
+            <MemoInput Placeholder="Your translated text..."
+                       Rows="2"
+                       ReadOnly="true"
+                       Value="@TranslatedText"
+                       AutoSize
+                       Style="resize: none;"/>
+        </Field>
+    </Fields>
+</Div>
+
+@code {
+    private string HangulText { get; set; } = "";
+    private string TranslatedText { get; set; } = "";
+    private HangulTranslator HangulTranslator { get; } = 
+        new(HangulLibrary.Hangul);
+
+    private void HandleClick()
+    {
+        TranslatedText = HangulTranslator.TranslateToPhonetic(HangulText);
+        Console.WriteLine(TranslatedText);
+    }
+}
