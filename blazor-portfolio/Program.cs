@@ -2,6 +2,7 @@ using blazor_portfolio.Components;
 using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,18 @@ builder.Services.AddBlazorise(options =>
     })
     .AddBootstrap5Providers()
     .AddFontAwesomeIcons();
+
+var hc = builder.Services.AddHealthChecks();
+
+hc.AddCheck(
+    name: "self-live",
+    check: () => HealthCheckResult.Healthy("Application is healthy"),
+    tags: new[] { "live" });
+
+hc.AddCheck(
+    name: "self-live",
+    check: () => HealthCheckResult.Healthy("Application is ready to serve requests"),
+    tags: new[] { "ready" });
 
 var app = builder.Build();
 
