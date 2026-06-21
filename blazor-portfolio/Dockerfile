@@ -1,23 +1,31 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
-USER $APP_UID
+FROM alpine:latest
+
+# Install .NET 10 runtime dependencies
+RUN apk add --no-cache \
+    bash \
+    wget \
+    ca-certificates \
+    icu-libs \
+    libgcc \
+    libstdc++ \
+    zlib \
+    openssl
+
+# Download and install .NET 10 aspnetcore runtime
+RUN mkdir -p /usr/local/bin/dotnet && \
+    wget -q https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/10.0.9/aspnetcore-runtime-10.0.9-linux-musl-x64.tar.gz -O /tmp/dotnet.tar.gz && \
+    tar -xzf /tmp/dotnet.tar.gz -C /usr/local/bin/dotnet && \
+    rm /tmp/dotnet.tar.gz
+
 WORKDIR /app
+COPY publish .
+
 EXPOSE 8080
-EXPOSE 8081
+ENV ASPNETCORE_HTTP_PORT=8080
+ENV DOTNET_EnableDiagnostics=0
+ENV PATH="/usr/local/bin/dotnet:$PATH"
 
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["blazor-portfolio/blazor-portfolio.csproj", "blazor-portfolio/"]
-RUN dotnet restore "blazor-portfolio/blazor-portfolio.csproj"
-COPY . .
-WORKDIR "/src/blazor-portfolio"
-RUN dotnet build "./blazor-portfolio.csproj" -c $BUILD_CONFIGURATION -o /app/build
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=30 \
+    CMD wget -q -O - http://localhost:8080/health || exit 1
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./blazor-portfolio.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "blazor-portfolio.dll"]
+ENTRYPOINT ["/usr/local/bin/dotnet/dotnet", "blazor-portfolio.dll"]

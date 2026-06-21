@@ -7,15 +7,21 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile("secretSettings.json");
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents(options =>
     {
         options.DetailedErrors = true;
     });
+
+Console.WriteLine(builder.Configuration["Blazorise:ProductKey"]);
+
 builder.Services.AddBlazorise(options =>
     {
         options.Immediate = true;
+        options.ProductToken = builder.Configuration["Blazorise:ProductKey"];
     })
     .AddBootstrap5Providers()
     .AddFontAwesomeIcons();

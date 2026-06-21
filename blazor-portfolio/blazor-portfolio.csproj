@@ -23,7 +23,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Hangulizer\Hangulizer\Hangulizer.csproj" />
+      <Reference Include="Hangulizer">
+        <HintPath>Hangulizer.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Compile Remove="publish\**"/>
+        <Content Remove="publish\**"/>
+        <EmbeddedResource Remove="publish\**"/>
+        <None Remove="publish\**"/>
     </ItemGroup>
 
 </Project>
