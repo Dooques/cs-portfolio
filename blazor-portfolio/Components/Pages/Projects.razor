@@ -1,41 +1,67 @@
 ﻿@page "/Projects"
+@using System.Net
+@using System.Text.Json
+@using blazor_portfolio.Components.Home
+@using blazor_portfolio.Model
+@inject IHttpClientFactory ClientFactory
 
 <Container>
     <Column>
-        <h1>Projects</h1>
+        <Heading1>Projects</Heading1>
 
-        <Select @bing-Value="@SelectedProject" TValue="string">
-            <SelectItem Value="FightingFlow">
+        <Select  TValue="string"
+                 Value="@ProjectTitle"
+                 ValueChanged="@SetProject"
+                 Border="Border.Dark">
+            <SelectItem Value="@FightingFlow">
                 Fighting Flow
             </SelectItem>
 
-            <SelectItem Value="CalicoLoFi">
+            <SelectItem Value="@CalicoLoFi">
                 Calico LoFi
             </SelectItem>
 
-            <SelectItem Value="RecordShop">
-                Record Shop
-            </SelectItem>
+            @* <SelectItem Value="RecordShop"> *@
+            @*     Record Shop *@
+            @* </SelectItem> *@
         </Select>
+        
+        <ProjectTemplate Project="SelectedProject"/>
     </Column>
-    
-    @switch (SelectedProject)
-    {
-        case "FightingFlow":
-            <FightingFlow/>
-            break;
-            case "CalicoLoFi":
-            <CalicoLoFi/>
-            break;
-            case "RecordShop":
-            <RecordShop/>
-    }
-    
 </Container>
 
 @code {
-    private string SelectedProject { get; set; } = "Fighting Flow";
-    private const string FightingFlow = "FightingFlow";
-    private const string CalicoLoFi = "CalicoLoFi";
-    private const string RecordShop = "RecordShop";
+    private string ProjectTitle { get; set; } = "Fighting Flow";
+    private const string FightingFlow = "Fighting Flow";
+    private const string CalicoLoFi = "Calico Lo-Fi";
+    // private const string RecordShop = "Record Shop";
+
+    private List<Project> ProjectList { get; set; } = [];
+    private Project SelectedProject { get; set; } = new();
+    private HttpClient HttpClient { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("Creating client");
+        HttpClient = ClientFactory.CreateClient("Client");
+        GetProjects();
+        Console.WriteLine("Setting project data to field");
+        SetProject(ProjectTitle);
+    }
+
+    private void SetProject(string value)
+    {
+        ProjectTitle = value;
+        SelectedProject = ProjectList.FirstOrDefault(p => 
+            p.Title == value) ?? new Project();
+        StateHasChanged();
+    }
+
+    private void GetProjects()
+    {
+        Console.WriteLine("Getting project data");
+        var projects = JsonSerializer.Deserialize<List<Project>>(
+            File.ReadAllText("Resources/projects.json")) ?? [];
+        ProjectList = projects;
+    }
 }

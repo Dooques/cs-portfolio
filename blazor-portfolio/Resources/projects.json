@@ -1,0 +1,39 @@
+﻿[
+  {
+    "Title": "Fighting Flow",
+    "Description": "An app to help develop and expand the fighting game community, helping them to learn combos in a more efficient way.",
+    "TechStack": [
+      "Kotlin",
+      "Jetpack Compose",
+      "Firebase",
+      "Firestore",
+      "Android",
+      "Retrofit"
+    ],
+    "Images": [
+      "img/project/ff-image-1.png",
+      "img/project/ff-image-2.png",
+      "img/project/ff-image-3.png",
+      "img/project/ff-image-4.png"
+    ]
+  },
+  {
+    "Title": "Calico Lo-Fi",
+    "Description": "Developed an app for listening to Lo-Fi Music while tracking your time working on projects",
+    "TechStack": [
+      "C#",
+      "Blazor",
+      "ASP.NET",
+      "Microsoft SQL Server",
+      "SQLite",
+      "Supabase Authentication",
+      "Javascript Interop",
+      "Youtube API"
+    ],
+    "Images": [
+      "img/project/calico-image-1.png",
+      "img/project/calico-image-2.png",
+      "img/project/calico-image-3.png"
+    ]
+  }
+]

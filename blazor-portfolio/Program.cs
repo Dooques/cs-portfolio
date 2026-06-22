@@ -1,3 +1,4 @@
+using System.Buffers.Text;
 using blazor_portfolio.Components;
 using Blazorise;
 using Blazorise.Bootstrap5;
@@ -16,8 +17,6 @@ builder.Services.AddRazorComponents()
         options.DetailedErrors = true;
     });
 
-Console.WriteLine(builder.Configuration["Blazorise:ProductKey"]);
-
 builder.Services.AddBlazorise(options =>
     {
         options.Immediate = true;
@@ -28,15 +27,18 @@ builder.Services.AddBlazorise(options =>
 
 var hc = builder.Services.AddHealthChecks();
 
+builder.Services.AddHttpClient("Client",client =>
+    client.BaseAddress = new Uri("https://localhost:5281"));
+
 hc.AddCheck(
     name: "self-live",
     check: () => HealthCheckResult.Healthy("Application is healthy"),
-    tags: new[] { "health" });
+    tags: ["health"]);
 
 hc.AddCheck(
     name: "self-ready",
     check: () => HealthCheckResult.Healthy("Application is ready to serve requests"),
-    tags: new[] { "ready" });
+    tags: ["ready"]);
 
 var app = builder.Build();
 

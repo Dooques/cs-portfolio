@@ -1,0 +1,79 @@
+﻿@using blazor_portfolio.Model
+<Column Margin="Margin.Is2.FromTop">
+    <Row Margin="Margin.Is4.FromTop"
+         Flex="Flex.Row.AlignItems.Start">
+        <Column Width="Width.Is50"
+                Gap="Gap.Is3"
+                Flex="Flex.Column.JustifyContent.Start">
+            <Div>
+                <Heading3>
+                    @Project.Title
+                </Heading3>
+
+                <Paragraph>
+                    @Project.Description
+                </Paragraph>
+            </Div>
+            
+            <Div>
+                <Heading4>
+                    Tech Stack
+                </Heading4>
+
+                <Paragraph>
+                    @for (var i = 0; i < Project.TechStack.Count; i++)
+                    {
+                        if (i < Project.TechStack.Count - 1)
+                        {
+                            <span>@Project.TechStack[i], </span>
+                        }
+                        else
+                        {
+                            <span>@Project.TechStack[i].</span>
+                        }
+                    }
+                </Paragraph>
+            </Div>
+            
+            <Button Color="Color.Primary" To="#" hidden="hidden">Check it out!</Button>
+
+        </Column>
+        <Div Width="Width.Is50"
+             @key="Project.Title">
+            <Carousel @bind-SelectedSlide="SelectedSlide"
+                      Style="max-height: 70vh; width: 100%;"
+                      Autoplay="false">
+                @if (Project.Images.Any())
+                {
+                    var i = 0;
+                    foreach (var imageUrl in Project.Images)
+                    {
+                        var index = i.ToString();
+                        <CarouselSlide Name="@index">
+                            <Image Source="@imageUrl"
+                                   Display="Display.Block"
+                                   Width="Width.Is100"
+                                   Style="max-height: 70vh; object-fit: contain"/>
+                        </CarouselSlide>
+                        i++;
+                    }
+                }
+            </Carousel>
+        </Div>
+    </Row>
+</Column>
+
+@code {
+    [Parameter] public Project Project { get; set; } = new();
+    private string Title { get; set; } = "Fighting Flow";
+    private string SubTitle { get; set; } = "Practice combos from your favourite fighting game";
+    private string Description { get; set; } = "";
+    
+    private string SelectedSlide { get; set; } = "0";
+
+    protected override void OnParametersSet()
+    {
+        SelectedSlide = "0";
+    }
+
+}
