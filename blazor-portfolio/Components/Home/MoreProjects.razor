@@ -1,6 +1,27 @@
-﻿<Button Type="ButtonType.Link"
-        Color="Color.Primary"
-        To="projects"
-        Width="Width.Px(300)">
-    Find more projects here!
-</Button>
+﻿<Row Flex="Flex.Row.JustifyContent.Between">
+    <Button Type="ButtonType.Link"
+            Color="Color.Primary"
+            To="projects"
+            Width="Width.Px(300)">
+        Find more projects here!
+    </Button>
+
+    <Button Type="ButtonType.Button"
+            Color="Color.Info"
+            Width="Width.Px(300)"
+            Clicked="@ActivateModal">
+        Contact
+    </Button>
+</Row>
+
+@code {
+    [Parameter] public EventCallback ShowModal { get; set; }
+    
+    private async Task ActivateModal()
+    {
+        if (ShowModal.HasDelegate)
+        {
+            await ShowModal.InvokeAsync();
+        }
+    }
+}
