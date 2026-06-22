@@ -1,7 +1,27 @@
-﻿<Bar Breakpoint="Breakpoint.Desktop"
+﻿<Bar Breakpoint="Breakpoint.Desktop" 
      Background="Background.Body"
      Shadow="Shadow.Default">
     <BarBrand>
-        <a class="navbar-brand" href="">blazor-portfolio</a>
+        <BarItem Margin="Margin.Is3.OnX">
+            <BarLink To="">
+                <span style="line-height: 0.9; font-size: 1.5rem; font-weight: bolder; margin: 0;">
+                    Dooques
+                </span>
+                
+            </BarLink>
+        </BarItem>
     </BarBrand>
+    <BarEnd Flex="Flex.InlineFlex.Row.Wrap.NoWrap">
+        <BarItem Margin="Margin.Is3.OnX">
+            <BarLink To="projects">
+                Projects
+            </BarLink>
+        </BarItem>
+        
+        <BarItem Margin="Margin.Is3.OnX">
+            <BarLink To="contact">
+               Contact 
+            </BarLink>
+        </BarItem>
+    </BarEnd>
 </Bar>

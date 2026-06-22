@@ -1,0 +1,123 @@
+﻿@page "/contact"
+
+<Container>
+    <Column>
+        <Heading Size="HeadingSize.Is1"
+                 TextWeight="TextWeight.Bold"
+                 Margin="Margin.Is5.FromBottom">
+            Get in Touch
+        </Heading>
+
+        <Row Flex="Flex.Row.AlignItems.Start">
+            <!-- Left Side: Contact Form -->
+            <Column ColumnSize="ColumnSize.Is12.OnMobile.Is7.OnDesktop">
+                <Card Border="Border.Is0"
+                      Margin="Margin.Is0.FromStart"
+                      Shadow="Shadow.None">
+                    <CardBody Padding="Padding.Is0.FromTop.Is0.FromStart">
+                        <Heading3 TextWeight="TextWeight.Bold"
+                                  Padding="Padding.Is2.FromBottom">
+                            Send a message
+                        </Heading3>
+                        <Form>
+                            <Field>
+                                <FieldLabel>Your Name</FieldLabel>
+                                <Input Placeholder="John Developer"/>
+                            </Field>
+
+                            <Field Margin="Margin.Is3.FromTop">
+                                <FieldLabel>Email Address</FieldLabel>
+                                <TextInput Placeholder="john.doe@example.com"/>
+                            </Field>
+
+                            <Field Class="mt-3">
+                                <FieldLabel>Subject</FieldLabel>
+                                <TextInput Placeholder="Please help with my project..."/>
+                            </Field>
+
+                            <Field Class="mt-3">
+                                <FieldLabel>Message</FieldLabel>
+                                <MemoInput Rows="5" Placeholder="Type your message here..."/>
+                            </Field>
+
+                            <Button Color="Color.Primary"
+                                    Type="ButtonType.Link"
+                                    Class="w-100 mt-4 py-2 fw-bold">
+                                Send Message
+                            </Button>
+                        </Form>
+                    </CardBody>
+                </Card>
+            </Column>
+
+            <!-- Right Side: Contact Details & Info -->
+            <Column ColumnSize="ColumnSize.Is12.OnMobile.Is5.OnDesktop"
+                    Class="d-flex flex-column justify-content-center">
+                <Heading Size="HeadingSize.Is3"
+                         Class="fw-bold mb-4">
+                    Find me here
+                </Heading>
+
+                <!-- Info Item 1 -->
+                <Row Flex="Flex.JustifyContent.Center.AlignItems.Center"
+                     Margin="Margin.Is3.OnY">
+                    <Figure Size="FigureSize.Is32x32"
+                            Padding="Padding.Is0"
+                            Margin="Margin.Is0">
+                        <Image Source="img/email.png" Fluid="true"
+                               Style="height: 32px; width: auto; filter: brightness(0) saturate(100%) invert(37%) sepia(93%) saturate(5470%) hue-rotate(214deg) brightness(101%) contrast(99%);"/>
+                    </Figure>
+
+                    <Column Margin="Margin.Is2.FromStart">
+                        <Heading Size="HeadingSize.Is6"
+                                 TextColor="TextColor.Muted"
+                                 TextWeight="TextWeight.Bold">
+                            samuel@dooques.uk
+                        </Heading>
+                    </Column>
+                </Row>
+
+                <!-- Info Item 2 -->
+                <Row Flex="Flex.JustifyContent.Center.AlignItems.Center"
+                     Margin="Margin.Is3.OnY">
+                    <Figure Size="FigureSize.Is32x32"
+                            Padding="Padding.Is0"
+                            Margin="Margin.Is0">
+                        <Image Source="img/linkedin.png" Fluid="true"/>
+                    </Figure>
+
+                    <Column Margin="Margin.Is2.FromStart">
+                        <Anchor To="https://linkedin.com/in/dooques"
+                                TextColor="TextColor.Muted"
+                                TextDecoration="TextDecoration.None">
+                            <Heading Size="HeadingSize.Is6"
+                                     Class="mb-1 fw-bold">
+                                LinkedIn
+                            </Heading>
+                        </Anchor>
+                    </Column>
+                </Row>
+
+                <Row Flex="Flex.JustifyContent.Center.AlignItems.Center"
+                     Margin="Margin.Is3.OnY">
+                    <Figure Size="FigureSize.Is32x32"
+                            Padding="Padding.Is0"
+                            Margin="Margin.Is0">
+                        <Image Source="img/github.png" Fluid="true"/>
+                    </Figure>
+
+                    <Column Margin="Margin.Is2.FromStart">
+                        <Anchor To="https://github.com/dooques"
+                                TextColor="TextColor.Muted"
+                                TextDecoration="TextDecoration.None">
+                            <Heading Size="HeadingSize.Is6"
+                                     Class="mb-1 fw-bold">
+                                GitHub
+                            </Heading>
+                        </Anchor>
+                    </Column>
+                </Row>
+            </Column>
+            </Row>
+    </Column>
+</Container>
