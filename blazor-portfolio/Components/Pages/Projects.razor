@@ -1,10 +1,41 @@
 ﻿@page "/Projects"
-<Container>
-    <h3>Projects</h3>
 
-    <Paragraph>This page is currently under construction...</Paragraph>
+<Container>
+    <Column>
+        <h1>Projects</h1>
+
+        <Select @bing-Value="@SelectedProject" TValue="string">
+            <SelectItem Value="FightingFlow">
+                Fighting Flow
+            </SelectItem>
+
+            <SelectItem Value="CalicoLoFi">
+                Calico LoFi
+            </SelectItem>
+
+            <SelectItem Value="RecordShop">
+                Record Shop
+            </SelectItem>
+        </Select>
+    </Column>
+    
+    @switch (SelectedProject)
+    {
+        case "FightingFlow":
+            <FightingFlow/>
+            break;
+            case "CalicoLoFi":
+            <CalicoLoFi/>
+            break;
+            case "RecordShop":
+            <RecordShop/>
+    }
+    
 </Container>
 
 @code {
-    
+    private string SelectedProject { get; set; } = "Fighting Flow";
+    private const string FightingFlow = "FightingFlow";
+    private const string CalicoLoFi = "CalicoLoFi";
+    private const string RecordShop = "RecordShop";
 }
