@@ -60,7 +60,7 @@ jobs:
 
       - name: Deploy to EC2
         env:
-          REPOSITORY: books-repo
+          REPOSITORY: blazor-portfolio
           REGISTRY: ${{steps.login-ecr.outputs.registry}}
           IMAGE_TAG: ${{github.sha}}
           EC2_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
