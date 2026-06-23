@@ -42,7 +42,7 @@ jobs:
       - name: Configure credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: blazor-portfolio
+          role-to-assume: arn:aws:iam::975050093882:role/blazor-portfolio-Role-eXzB9Creurcm
           aws-region: ${{env.AWS_REGION}}
 
       - name: Login to ECR repo
@@ -55,7 +55,7 @@ jobs:
           REPOSITORY: blazor-portfolio
           IMAGE_TAG: ${{github.sha}}
         run: |-
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -f blazor-portfolio/Dockerfile .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
       - name: Deploy to EC2
