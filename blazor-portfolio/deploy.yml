@@ -48,7 +48,7 @@ jobs:
           REPOSITORY: blazor-portfolio
           IMAGE_TAG: ${{github.sha}}
         run: |-
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -f blazor-portfolio/Dockerfile .
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -f blazor-portfolio/Dockerfile blazor-portfolio/
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
       - name: Deploy to EC2
