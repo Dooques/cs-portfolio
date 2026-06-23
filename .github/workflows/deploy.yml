@@ -31,6 +31,9 @@ jobs:
         run: |
           cd blazor-portfolio
           dotnet publish -c Release -o publish
+          if [ -f secretSettings.json ]; then
+            cp secretSettings.json publish/
+          fi
 
       - name: Configure credentials
         uses: aws-actions/configure-aws-credentials@v4
