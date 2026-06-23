@@ -80,4 +80,4 @@ jobs:
             else
                 echo "Container does not exist. No action taken."
             fi
-            sudo docker run -d --name $CONTAINER_NAME -p 8080:5000 -e ASPNETCORE_ENVIRONMENT=Production -e ASPNETCORE_URLS=http://0.0.0.0:5000 $REGISTRY/$REPOSITORY:$IMAGE_TAG
+            sudo docker run -d --name $CONTAINER_NAME -p 8080:5000 -e ASPNETCORE_ENVIRONMENT=Production -e ASPNETCORE_URLS=http://0.0.0.0:5000 -e BLAZORKEY=$BLAZORKEY $REGISTRY/$REPOSITORY:$IMAGE_TAG
