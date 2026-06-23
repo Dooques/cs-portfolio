@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs: 
-  build:
+  push: 
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,18 +27,11 @@ jobs:
         with:
           dotnet-version: ${{matrix.dotnet-version}}
 
-      - name: Build project
-        run: | 
-          dotnet build -c Release
-          echo "build successful"
+      - name: Publish project
+        run: |
+          cd blazor-portfolio
+          dotnet publish -c Release -o publish
 
-  push: 
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4 
-        
       - name: Configure credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -54,8 +47,9 @@ jobs:
           REGISTRY: ${{steps.login-ecr.outputs.registry}}
           REPOSITORY: blazor-portfolio
           IMAGE_TAG: ${{github.sha}}
-        run: |-
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -f blazor-portfolio/Dockerfile .
+        run: |
+          cd blazor-portfolio
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
       - name: Deploy to EC2
@@ -73,7 +67,7 @@ jobs:
           key: ${{env.EC2_PRIVATE_KEY}}
           username: ${{env.USER_NAME}}
           envs: REGISTRY, REPOSITORY, IMAGE_TAG, AWS_REGION, CONTAINER_NAME
-          script: |-
+          script: |
             aws ecr get-login-password --region $AWS_REGION | sudo docker login --username AWS --password-stdin $REGISTRY
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
             if sudo docker ps -a --format '{{.Names}}' | grep -w "$CONTAINER_NAME" > /dev/null; then
@@ -83,4 +77,4 @@ jobs:
             else
                 echo "Container does not exist. No action taken."
             fi
-            sudo docker run -d --name $CONTAINER_NAME -p 8080:8080 -e ASPNETCORE_ENVIRONMENT=Development $REGISTRY/$REPOSITORY:$IMAGE_TAG
+            sudo docker run -d --name $CONTAINER_NAME -p 8080:5000 -e ASPNETCORE_ENVIRONMENT=Production -e ASPNETCORE_URLS=http://0.0.0.0:5000 $REGISTRY/$REPOSITORY:$IMAGE_TAG
