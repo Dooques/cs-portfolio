@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting" Version="2.1.0" />
       <PackageReference Include="Blazorise" Version="2.2.1" />
       <PackageReference Include="Blazorise.Bootstrap5" Version="2.2.1" />
       <PackageReference Include="Blazorise.Icons.FontAwesome" Version="2.2.1" />
