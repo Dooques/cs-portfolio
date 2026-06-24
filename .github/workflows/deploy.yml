@@ -38,7 +38,7 @@ jobs:
       - name: Configure credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::975050093882:role/blazor-portfolio-role
+          role-to-assume: arn:aws:iam::975050093882:role/blazor-portfolio-Role-eXzB9Creurcm
           aws-region: ${{env.AWS_REGION}}
 
       - name: Login to ECR repo
