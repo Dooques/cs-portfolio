@@ -26,6 +26,6 @@ ENV DOTNET_EnableDiagnostics=0
 ENV PATH="/usr/local/bin/dotnet:$PATH"
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=30 \
-    CMD wget -q -O - http://localhost:8080/health || exit 1
+    CMD wget -q -O - http://localhost:5000/health || exit 1
 
 ENTRYPOINT ["/usr/local/bin/dotnet/dotnet", "blazor-portfolio.dll"]
