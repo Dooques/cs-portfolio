@@ -55,6 +55,24 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{env.AWS_REGION}}
+
+      - name: Get runner public IP
+        id: ip
+        run: echo "ip=$(curl -s https://checkip.amazonaws.com)" >> $GITHUB_OUTPUT
+
+      - name: Allow runner IP for SSH
+        run: |
+          aws ec2 authorize-security-group-ingress \
+            --group-id sg-02234776355cbc5b0 \
+            --protocol tcp --port 22 \
+            --cidr ${{ steps.ip.outputs.ip }}/32
+
       - name: Deploy to EC2
         env:
           REPOSITORY: blazor-portfolio
@@ -70,7 +88,7 @@ jobs:
           port: 22
           key: ${{env.EC2_PRIVATE_KEY}}
           username: ${{env.USER_NAME}}
-          envs: REGISTRY, REPOSITORY, IMAGE_TAG, AWS_REGION, CONTAINER_NAME, BLAZORKEY
+          envs: REGISTRY,REPOSITORY,IMAGE_TAG,AWS_REGION,CONTAINER_NAME,BLAZORKEY
           script: |
             aws ecr get-login-password --region $AWS_REGION | sudo docker login --username AWS --password-stdin $REGISTRY
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
@@ -82,3 +100,11 @@ jobs:
                 echo "Container does not exist. No action taken."
             fi
             sudo docker run -d --name $CONTAINER_NAME -p 8080:5000 -e ASPNETCORE_ENVIRONMENT=Production -e ASPNETCORE_URLS=http://0.0.0.0:5000 -e BLAZORKEY=$BLAZORKEY $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+      - name: Revoke runner IP from SSH
+        if: always()
+        run: |
+          aws ec2 revoke-security-group-ingress \
+            --group-id sg-0a959a5c5b02c22a8 \
+            --protocol tcp --port 22 \
+            --cidr ${{ steps.ip.outputs.ip }}/32
