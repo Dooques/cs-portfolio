@@ -63,13 +63,14 @@ jobs:
           EC2_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           HOSTNAME: ${{secrets.HOST}}
           USER_NAME: ${{secrets.USERNAME}}
+          BLAZORKEY: ${{ secrets.BLAZORKEY }}
         uses: appleboy/ssh-action@v1.1.0
         with:
           host: ${{env.HOSTNAME}}
           port: 22
           key: ${{env.EC2_PRIVATE_KEY}}
           username: ${{env.USER_NAME}}
-          envs: REGISTRY, REPOSITORY, IMAGE_TAG, AWS_REGION, CONTAINER_NAME
+          envs: REGISTRY, REPOSITORY, IMAGE_TAG, AWS_REGION, CONTAINER_NAME, BLAZORKEY
           script: |
             aws ecr get-login-password --region $AWS_REGION | sudo docker login --username AWS --password-stdin $REGISTRY
             sudo docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
