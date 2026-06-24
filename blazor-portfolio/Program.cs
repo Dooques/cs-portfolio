@@ -26,7 +26,7 @@ builder.Services.AddBlazorise(options =>
         options.Immediate = true;
         if (builder.Environment.IsProduction())
         { 
-            options.ProductToken = Environment.GetEnvironmentVariable("BLAZORKEY");
+            options.ProductToken = Environment.GetEnvironmentVariable("BLAZORKEY")?.Trim();
         }
     })
     .AddBootstrap5Providers()
