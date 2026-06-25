@@ -10,8 +10,7 @@
         This project is a .NET console application that translates Korean characters into english phonetics.
     </Paragraph>
 
-    <Fields ColumnSize="ColumnSize.IsAuto"
-            Flex="Flex.Column">
+    <Fields Flex="Flex.Column" Margin="Margin.Is0.OnX">
         <Field>
             <FieldLabel>Translate hangul characters!</FieldLabel>
             <FieldBody>
@@ -23,15 +22,7 @@
                            Style="resize: none;"/>
             </FieldBody>
         </Field>
-
-        <Button Margin="Margin.Is2.OnY"
-                Flex="Flex.AlignSelf.Start"
-                Color="Color.Primary"
-                Width="Width.Px(300)"
-                Clicked="@HandleClick">
-            Translate Now
-        </Button>
-
+        
         <Field>
             <FieldLabel>Results!</FieldLabel>
             <MemoInput Placeholder="Your translated text..."
@@ -42,6 +33,14 @@
                        AutoSize
                        Style="resize: none;"/>
         </Field>
+        
+        <Button Margin="Margin.Is1"
+                Flex="Flex.AlignSelf.Start"
+                Color="Color.Primary"
+                Width="Width.Is25"
+                Clicked="@HandleClick">
+            Translate Now
+        </Button>
     </Fields>
 </Column>
 
