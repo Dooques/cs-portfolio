@@ -1,0 +1,88 @@
+﻿@using System.Reflection.Metadata
+<Modal @ref="ContactModalRef" 
+       Centered>
+    <ModalContent Background="Background.Info" 
+                  TextColor="TextColor.Dark">
+        <ModalHeader>
+            <ModalTitle>
+                Get in Touch
+            </ModalTitle>
+            <CloseButton/>
+        </ModalHeader>
+        <ModalBody>
+            <Column Padding="Padding.Is2.OnX">
+                <Row Flex="Flex.JustifyContent.Center.AlignItems.Center"
+                     Margin="Margin.Is3.FromBottom">
+                    <Figure Size="FigureSize.Is32x32"
+                            Padding="Padding.Is0"
+                            Margin="Margin.Is0">
+                        <Image Source="img/email.png" Fluid="true"
+                               Style="height: 32px; width: auto; filter: brightness(0) saturate(100%) invert(37%) sepia(93%) saturate(5470%) hue-rotate(214deg) brightness(101%) contrast(99%);"/>
+                    </Figure>
+
+                    <Column Margin="Margin.Is2.FromStart">
+                        <Heading Size="HeadingSize.Is6"
+                                 TextWeight="TextWeight.Bold">
+                            samuel@dooques.uk
+                        </Heading>
+                    </Column>
+                </Row>
+
+                <Row Flex="Flex.JustifyContent.Center.AlignItems.Center"
+                     Margin="Margin.Is3.OnY">
+                    <Figure Size="FigureSize.Is32x32"
+                            Padding="Padding.Is0"
+                            Margin="Margin.Is0">
+                        <Image Source="img/linkedin.png" Fluid="true"/>
+                    </Figure>
+
+                    <Column Margin="Margin.Is2.FromStart">
+                        <Anchor To="https://linkedin.com/in/dooques"
+                                TextDecoration="TextDecoration.None">
+                            <Heading Size="HeadingSize.Is6"
+                                     Class="mb-1 fw-bold">
+                                LinkedIn
+                            </Heading>
+                        </Anchor>
+                    </Column>
+                </Row>
+
+                <Row Flex="Flex.JustifyContent.Center.AlignItems.Center"
+                     Margin="Margin.Is3.OnY">
+                    <Figure Size="FigureSize.Is32x32"
+                            Padding="Padding.Is0"
+                            Margin="Margin.Is0">
+                        <Image Source="img/github.png" Fluid="true"/>
+                    </Figure>
+
+                    <Column Margin="Margin.Is2.FromStart">
+                        <Anchor To="https://github.com/dooques"
+                                TextDecoration="TextDecoration.None">
+                            <Heading Size="HeadingSize.Is6"
+                                     TextDecoration="TextDecoration.None"
+                                     Class="mb-1 fw-bold">
+                                GitHub
+                            </Heading>
+                        </Anchor>
+                    </Column>
+                </Row>
+            </Column>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+@code {
+    
+    private Modal ContactModalRef { get; set; } = new();
+
+    public async Task ShowContactModal()
+    {
+        await ContactModalRef.Show();
+    }
+
+    public async Task CloseContactModal()
+    {
+        await ContactModalRef.Hide();
+    }
+
+}

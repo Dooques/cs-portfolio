@@ -16,5 +16,32 @@
 
 
 @code {
-    private readonly Theme _theme = new();
+
+    private readonly Theme _theme = new Theme
+    {
+        ColorOptions = new ThemeColorOptions
+        {
+            Primary = "#6E1F3B",   // burgundy – buttons, links, CTAs
+            Secondary = "#8B4226", // auburn – secondary actions
+            Info = "#AEB9F2",      // periwinkle – your highlight color
+            Dark = "#2A1B12",      // dark ink – headings/text
+            Light = "#F1E8D9"      // cream – light surfaces, subtle backgrounds
+        },
+        BackgroundOptions = new ThemeBackgroundOptions
+        {
+            Primary = "#6E1F3B",   // burgundy – buttons, links, CTAs
+            Secondary = "#8B4226", // auburn – secondary actions
+            Info = "#AEB9F2",      // periwinkle – your highlight color
+            Dark = "#2A1B12",      // dark ink – headings/text
+            Light = "#F1E8D9"  
+        },
+        TextColorOptions = new ThemeTextColorOptions
+        {
+            Primary = "#6E1F3B",   // burgundy – buttons, links, CTAs
+            Secondary = "#8B4226", // auburn – secondary actions
+            Info = "#AEB9F2",      // periwinkle – your highlight color
+            Dark = "#2A1B12",      // dark ink – headings/text
+            Light = "#F1E8D9"  
+        }
+    };
 }

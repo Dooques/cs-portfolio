@@ -13,7 +13,6 @@ builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 builder.Configuration.AddJsonFile(
     "secretSettings.json", optional: true, reloadOnChange: true);
 
-
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents(options =>
@@ -27,6 +26,10 @@ builder.Services.AddBlazorise(options =>
         if (builder.Environment.IsProduction())
         { 
             options.ProductToken = Environment.GetEnvironmentVariable("BLAZORKEY")?.Trim();
+        }
+        else
+        {
+            options.ProductToken = builder.Configuration["Blazorise:ProductKey"];
         }
     })
     .AddBootstrap5Providers()

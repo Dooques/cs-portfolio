@@ -1,23 +1,24 @@
-﻿<Row Flex="Flex.Row.JustifyContent.Between">
+﻿<Row Flex="Flex.Row.JustifyContent.Start" 
+     Gap="Gap.Is5">
     <Button Type="ButtonType.Link"
-            Color="Color.Primary"
+            Color="Color.Info"
             To="projects"
-            Width="Width.Px(300)">
+            Width="Width.Auto">
         Find more projects here!
     </Button>
 
     <Button Type="ButtonType.Button"
             Color="Color.Info"
-            Width="Width.Px(300)"
-            Clicked="@ActivateModal">
+            Width="Width.Auto"
+            Clicked="@HandleModalEvent">
         Contact
     </Button>
 </Row>
 
 @code {
     [Parameter] public EventCallback ShowModal { get; set; }
-    
-    private async Task ActivateModal()
+
+    private async Task HandleModalEvent()
     {
         if (ShowModal.HasDelegate)
         {

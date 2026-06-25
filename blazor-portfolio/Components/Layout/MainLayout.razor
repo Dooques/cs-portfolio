@@ -1,8 +1,12 @@
 ﻿@inherits LayoutComponentBase
 
 <Layout class="page">
-    <NavMenu/>
-    <LayoutContent Style="padding-top: 70px; padding-block: 20px;">
-        @Body
-    </LayoutContent>
+    <Div Background="Background.Light" TextColor="TextColor.Dark" Height="Height.Vh(100)">
+        <Container Breakpoint="Breakpoint.Desktop">
+            <NavMenu/>
+            <LayoutContent Style="padding-top: 70px; padding-block: 20px;">
+                @Body
+            </LayoutContent>
+        </Container>
+    </Div>
 </Layout>
