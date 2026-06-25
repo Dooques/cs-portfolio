@@ -1,27 +1,30 @@
-﻿<Bar Breakpoint="Breakpoint.Desktop" 
+﻿<Bar Breakpoint="Breakpoint.Desktop"
      Background="Background.Body"
      Shadow="Shadow.Default">
-    <BarBrand>
-        <BarItem Margin="Margin.Is3.OnX">
-            <BarLink To=""
-                     TextColor="TextColor.Muted">
-                Dooques 
-            </BarLink>
-        </BarItem>
-    </BarBrand>
-    <BarEnd Flex="Flex.InlineFlex.Row.Wrap.NoWrap">
-        <BarItem Margin="Margin.Is3.OnX">
-            <BarLink To="projects"
-                     TextColor="TextColor.Muted">
-                Projects
-            </BarLink>
-        </BarItem>
-        
-        @* <BarItem Margin="Margin.Is3.OnX"> *@
-        @*     <BarLink To="contact" *@
-        @*              TextColor="TextColor.Muted"> *@
-        @*        Contact  *@
-        @*     </BarLink> *@
-        @* </BarItem> *@
-    </BarEnd>
+    <Container>
+        <BarBrand>
+            <BarItem>
+                <BarLink To=""
+                         TextColor="TextColor.Muted">
+                    Dooques
+                </BarLink>
+            </BarItem>
+        </BarBrand>
+        <BarEnd Flex="Flex.InlineFlex.Row.Wrap.NoWrap">
+            <BarItem>
+                <BarLink To="projects"
+                         TextColor="TextColor.Muted">
+                    Projects
+                </BarLink>
+            </BarItem>
+
+            @* <BarItem Margin="Margin.Is3.OnX"> *@
+            @*     <BarLink To="contact" *@
+            @*              TextColor="TextColor.Muted"> *@
+            @*        Contact  *@
+            @*     </BarLink> *@
+            @* </BarItem> *@
+        </BarEnd>
+    </Container>
+    
 </Bar>
