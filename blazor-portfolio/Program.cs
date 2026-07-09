@@ -4,6 +4,7 @@ using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -70,6 +71,10 @@ app.UseHealthChecks("/ready", new HealthCheckOptions
 {
     AllowCachingResponses = false,
     Predicate = r => r.Tags.Contains("ready")
+});
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost
 });
 
 // app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
