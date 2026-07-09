@@ -24,14 +24,9 @@ builder.Services.AddRazorComponents()
 builder.Services.AddBlazorise(options =>
     {
         options.Immediate = true;
-        if (builder.Environment.IsProduction())
-        { 
-            options.ProductToken = Environment.GetEnvironmentVariable("BLAZORKEY")?.Trim();
-        }
-        else
-        {
-            options.ProductToken = builder.Configuration["Blazorise:ProductKey"];
-        }
+        options.ProductToken = builder.Environment.IsProduction() ? 
+            Environment.GetEnvironmentVariable("BLAZORKEY")?.Trim() : 
+            builder.Configuration["Blazorise:ProductKey"];
     })
     .AddBootstrap5Providers()
     .AddFontAwesomeIcons();
@@ -53,6 +48,13 @@ hc.AddCheck(
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    Console.WriteLine($"[REQ] {context.Request.Method} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path} | X-Forwarded-Host={context.Request.Headers["X-Forwarded-Host"]} | X-Forwarded-Proto={context.Request.Headers["X-Forwarded-Proto"]}");
+    await next();
+    Console.WriteLine($"[RES] Status={context.Response.StatusCode} for {context.Request.Path}");
+});
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -72,6 +74,7 @@ app.UseHealthChecks("/ready", new HealthCheckOptions
     AllowCachingResponses = false,
     Predicate = r => r.Tags.Contains("ready")
 });
+
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost
