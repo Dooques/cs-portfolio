@@ -55,6 +55,15 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_DB5A5A27DEB44B50BEA58B38F9D49C62 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_21125B0801F24920AC654BCDABFEFC94 }}
 
+      - name: Set App Service application settings
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: 'cs-portfolio'
+          app-settings-json: |
+            [
+              { "name": "BLAZORKEY", "value": "@Microsoft.KeyVault(SecretUri=https://${{ vars.AZURE_KEYVAULT_NAME }}.vault.azure.net/secrets/BLAZORKEY/)", "slotSetting": false }
+            ]
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
