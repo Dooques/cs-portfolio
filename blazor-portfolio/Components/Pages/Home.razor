@@ -1,34 +1,24 @@
-﻿@page "/"
+@page "/"
 @using blazor_portfolio.Components.Home
 <PageTitle>Dooques: Software Developer</PageTitle>
 
-<ContactModal @ref="ModalRef"/>
+<div class="home-page">
+    <div class="intro">
+        <BioHeader/>
+        <TechStackIcons/>
+    </div>
 
-<Column>
-    <BioHeader/>
-    
-    <TechStackIcons/>
-    
-    <Divider Border="Border.Dark"/>
-    
-    <HangulizerProject/>
-    
-    <Divider Border="Border.Dark"/>
-    
-    <MoreProjects ShowModal="@ShowModal"/>
-</Column>
+    <hr class="section-divider"/>
 
-@code {
+    <div class="projects-group">
+        <h2 class="projects-heading">Projects</h2>
+        <div class="projects-list">
+            <HangulizerProject/>
+            <ProjectsShowcase/>
+        </div>
+    </div>
 
-    private ContactModal ModalRef { get; set; } = new();
+    <hr class="section-divider"/>
 
-    private async Task ShowModal()
-    {
-        await ModalRef.ShowContactModal();
-    }
-
-    private async Task HideModal()
-    {
-        await ModalRef.CloseContactModal();
-    }
-}
+    <Contact/>
+</div>

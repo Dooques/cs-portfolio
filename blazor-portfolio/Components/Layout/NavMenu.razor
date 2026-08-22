@@ -1,21 +1,22 @@
-﻿<Bar TextColor="TextColor.Dark"
-     Background="Background.Transparent">
+<Bar TextColor="TextColor.Dark"
+     Background="Background.Transparent"
+     Class="site-nav">
     <BarBrand>
         <BarItem>
-            <BarLink To="" 
-                     TextColor="TextColor.Dark">
+            <BarLink To="" Class="site-nav__brand">
                 Dooques
             </BarLink>
         </BarItem>
     </BarBrand>
-    
-    <BarEnd Flex="Flex.InlineFlex.Row.Wrap.NoWrap">
-        <BarItem >
-            <BarLink To="projects">
-                <Button Background="Background.Info" TextColor="TextColor.Dark">
-                    Projects
-                </Button>
+
+    <BarEnd Flex="Flex.InlineFlex.Row.AlignItems.Center.Wrap.NoWrap" Gap="Gap.Is4">
+        <BarItem>
+            <BarLink To="projects" Class="site-nav__link">
+                Projects
             </BarLink>
+        </BarItem>
+        <BarItem>
+            <ThemeToggle/>
         </BarItem>
     </BarEnd>
 </Bar>

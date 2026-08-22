@@ -1,0 +1,4 @@
+/* Intentionally empty. ContactModal.razor's markup is entirely Blazorise
+   components (Modal/ModalContent/etc.) with no literal HTML element of our
+   own wrapping it, so scoped/::deep CSS here can't reliably reach the
+   rendered modal — see the .contact-modal__* rules in wwwroot/app.css. */

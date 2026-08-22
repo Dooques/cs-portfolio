@@ -1,0 +1,39 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+}
+
+.intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.projects-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+}
+
+.projects-heading {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.home-page .section-divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 0;
+    /* Bootstrap's reboot sets all <hr> elements to opacity: .25 by default,
+       which made this barely visible even with a themed border-color. */
+    opacity: 1;
+}

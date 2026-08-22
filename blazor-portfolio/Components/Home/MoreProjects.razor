@@ -1,29 +1,3 @@
-﻿<Row Flex="Flex.Row.JustifyContent.Start"
-     Gap="Gap.Is5"
-     Margin="Margin.Is1.OnX">
-    <Button Type="ButtonType.Link"
-            Color="Color.Secondary"
-            To="projects"
-            Width="Width.Is25">
-       More Projects 
-    </Button>
-
-    <Button Type="ButtonType.Button"
-            Color="Color.Secondary"
-            Width="Width.Is25"
-            Clicked="@HandleModalEvent">
-        Contact
-    </Button>
-</Row>
-
-@code {
-    [Parameter] public EventCallback ShowModal { get; set; }
-
-    private async Task HandleModalEvent()
-    {
-        if (ShowModal.HasDelegate)
-        {
-            await ShowModal.InvokeAsync();
-        }
-    }
-}
+@* Unused — this only ever held the "Contact" button that opened the old
+   contact modal. Contact.razor is now rendered directly on the home page,
+   so there's nothing left for this component to do. *@

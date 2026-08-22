@@ -1,0 +1,25 @@
+.project-card {
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+}
+
+.project-card ::deep textarea {
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-sm) !important;
+    background-color: var(--color-bg) !important;
+    color: var(--color-text) !important;
+}
+
+/* Bootstrap's own placeholder color rule (in app.css) uses --bs-secondary-color,
+   which isn't wired into this site's data-theme system, so it stays the same
+   shade regardless of theme. Override it here with our theme-aware token. */
+.project-card ::deep textarea::placeholder {
+    color: var(--color-text-muted) !important;
+}
+
+.project-card ::deep textarea:focus {
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 0 0 0.2rem var(--color-focus-ring) !important;
+}
