@@ -1,90 +1,71 @@
-﻿@using System.Reflection.Metadata
-<Modal @ref="ContactModalRef" 
-       Centered>
-    <ModalContent Background="Background.Info" 
-                  TextColor="TextColor.Dark">
-        <ModalHeader Border="Border.Dark.OnBottom">
-            <ModalTitle>
-                Get in Touch
-            </ModalTitle>
-            <CloseButton />
+@using System.ComponentModel.DataAnnotations
+@inject IJSRuntime JsRuntime
+
+<Modal @ref="_modal">
+    <ModalContent Centered="true" Class="contact-modal__content">
+        <ModalHeader Class="contact-modal__header">
+            <ModalTitle Class="contact-modal__title">Get in Touch</ModalTitle>
+            <CloseButton/>
         </ModalHeader>
-        <ModalBody>
-            <Column Padding="Padding.Is2.OnX">
-                <Row Flex="Flex.JustifyContent.Center.AlignItems.Center"
-                     Margin="Margin.Is3.FromBottom">
-                    <Figure Size="FigureSize.Is32x32"
-                            Padding="Padding.Is0"
-                            Margin="Margin.Is0">
-                        <Image Source="img/email.png" Fluid="true"/>
-                    </Figure>
+        <ModalBody Class="contact-modal__body">
+            <EditForm Model="@FormModel" OnValidSubmit="@HandleSubmit" class="contact-form">
+                <DataAnnotationsValidator/>
 
-                    <Column Margin="Margin.Is2.FromStart">
-                        <Heading Size="HeadingSize.Is6"
-                                 TextColor="TextColor.Dark"
-                                 TextWeight="TextWeight.Bold">
-                            samuel@dooques.uk
-                        </Heading>
-                    </Column>
-                </Row>
+                <div class="contact-form__row">
+                    <div class="contact-form__field">
+                        <label for="contact-name">Name</label>
+                        <InputText id="contact-name" class="contact-form__input" @bind-Value="FormModel.Name"/>
+                        <ValidationMessage For="@(() => FormModel.Name)"/>
+                    </div>
 
-                <Row Flex="Flex.JustifyContent.Center.AlignItems.Center"
-                     Margin="Margin.Is3.OnY">
-                    <Figure Size="FigureSize.Is32x32"
-                            Padding="Padding.Is0"
-                            Margin="Margin.Is0">
-                        <Image Source="img/linkedin.png" Fluid="true"/>
-                    </Figure>
+                    <div class="contact-form__field">
+                        <label for="contact-email">Email</label>
+                        <InputText id="contact-email" class="contact-form__input" @bind-Value="FormModel.Email"/>
+                        <ValidationMessage For="@(() => FormModel.Email)"/>
+                    </div>
+                </div>
 
-                    <Column Margin="Margin.Is2.FromStart">
-                        <Anchor To="https://linkedin.com/in/dooques"
-                                TextDecoration="TextDecoration.None">
-                            <Heading Size="HeadingSize.Is6"
-                                     TextColor="TextColor.Dark"
-                                     Class="mb-1 fw-bold">
-                                LinkedIn
-                            </Heading>
-                        </Anchor>
-                    </Column>
-                </Row>
+                <div class="contact-form__field">
+                    <label for="contact-message">Message</label>
+                    <InputTextArea id="contact-message" class="contact-form__input" Rows="4" @bind-Value="FormModel.Message"/>
+                    <ValidationMessage For="@(() => FormModel.Message)"/>
+                </div>
 
-                <Row Flex="Flex.JustifyContent.Center.AlignItems.Center"
-                     Margin="Margin.Is3.OnY">
-                    <Figure Size="FigureSize.Is32x32"
-                            Padding="Padding.Is0"
-                            Margin="Margin.Is0">
-                        <Image Source="img/github.png" Fluid="true"/>
-                    </Figure>
-
-                    <Column Margin="Margin.Is2.FromStart">
-                        <Anchor To="https://github.com/dooques"
-                                TextDecoration="TextDecoration.None">
-                            <Heading Size="HeadingSize.Is6"
-                                     TextDecoration="TextDecoration.None"
-                                     TextColor="TextColor.Dark"
-                                     Class="mb-1 fw-bold">
-                                GitHub
-                            </Heading>
-                        </Anchor>
-                    </Column>
-                </Row>
-            </Column>
+                <button type="submit" class="btn-accent">Send</button>
+            </EditForm>
         </ModalBody>
     </ModalContent>
 </Modal>
 
 @code {
-    
-    private Modal ContactModalRef { get; set; } = new();
+    private Modal _modal = null!;
+    private ContactFormModel FormModel { get; set; } = new();
 
-    public async Task ShowContactModal()
+    public Task Open() => _modal.Show();
+
+    // No backend email service is wired up, so this opens the visitor's own
+    // mail client with the message pre-filled, rather than pretending to
+    // deliver it silently. Swap for a real POST once there's somewhere to
+    // send it to.
+    private async Task HandleSubmit()
     {
-        await ContactModalRef.Show();
+        var subject = Uri.EscapeDataString($"Portfolio contact from {FormModel.Name}");
+        var body = Uri.EscapeDataString($"{FormModel.Message}\n\nFrom: {FormModel.Name} ({FormModel.Email})");
+        var mailto = $"mailto:samuel@dooques.uk?subject={subject}&body={body}";
+        await JsRuntime.InvokeVoidAsync("open", mailto, "_self");
+        await _modal.Hide();
+        FormModel = new();
     }
 
-    public async Task CloseContactModal()
+    private class ContactFormModel
     {
-        await ContactModalRef.Hide();
-    }
+        [Required]
+        public string Name { get; set; } = "";
 
+        [Required, EmailAddress]
+        public string Email { get; set; } = "";
+
+        [Required]
+        public string Message { get; set; } = "";
+    }
 }

@@ -1,34 +1,66 @@
-﻿<Div Flex="Flex.Row.AlignItems.Center.JustifyContent.Between">
-    <Jumbotron Flex="Flex.Column.AlignContent.Center"
-               Background="Background.Transparent"
-               Width="Width.Is75"
-               Margin="Margin.Is0.FromBottom.Is3.FromEnd"
-               Padding="Padding.Is0">
-        <JumbotronTitle Size="JumbotronTitleSize.Is2"
-                        TextWeight="TextWeight.SemiBold">
-            Samuel Dukes
-        </JumbotronTitle>
+<section class="hero">
+    <div class="hero__text">
+        <header class="hero__header">
+            <h1 class="hero__name">Full Stack Software Engineer</h1>
+            <p class="hero__role">Samuel Dukes</p>
+            <ThemeToggle ShowLabel="true"/>
+        </header>
 
-        <Div>
-            <JumbotronSubtitle TextWeight="TextWeight.SemiBold">
-                I am a Northcoders Graduate Software Developer
-            </JumbotronSubtitle>
+        <p class="hero__bio">
+            Hello, my name is Sam! I’m a career switcher, taking over a decade of customer
+            service and client consultation experience into the tech industry as a full stack
+            developer.
+        </p>
 
-            <JumbotronSubtitle TextWeight="TextWeight.SemiBold">
-                With experience in many avenues of software development
-                including: <br/> <br/>
-                <Span TextWeight="TextWeight.Bold">
-                    C#, .Net, Blazor, Kotlin, Java, Spring Boot, and Android Native
-                </Span>
-            </JumbotronSubtitle>
-        </Div>
-        
-    </Jumbotron>
-    <Figure Size="FigureSize.Is256x256">
-        <Image
-            Class="portfolio-photo"
-            Source="img/sam.png"
-            Text="Sam Dukes"
-            Fluid="true"/>
-    </Figure>
-</Div>
+        <h2 class="hero__section-heading">My Journey</h2>
+
+        <p class="hero__bio">
+            Back in 2023 I began learning Python and ended up writing a script to automate
+            stock pricing at Elite Vision. Seeing that script create a measurable, optimised
+            workflow sparked something that’s stuck with me ever since.
+        </p>
+
+        <p class="hero__bio">
+            Since then I have coded voraciously before and after work, exploring a handful of
+            different technologies. My self-driven learning has culminated in completing
+            Northcoders’ Enterprise Engineering course.
+        </p>
+
+        @if (ShowMore)
+        {
+            <p class="hero__bio">
+                Before making the switch, I spent over a decade in customer-facing roles,
+                starting with barbering, then moving into the Optics field as an Optical
+                Assistant for Specsavers and later as a Lab Technician with Elite Vision
+                Therapy Center in Toronto, Canada.
+            </p>
+
+            <p class="hero__bio">
+                Across all of these roles I built a foundation in client consultation,
+                problem solving, working under pressure and working with precision. All of
+                these are skills that carry over well into developer roles.
+            </p>
+
+            <p class="hero__bio">
+                Since picking up code, I’ve explored a broad range of tools and platforms.
+                I’ve built Android applications using Jetpack Compose, multiplatform projects
+                in Kotlin backed by a Spring Boot API, and C# applications using the .NET
+                framework with Blazor on the frontend. Currently, I’m developing my React
+                skills to round out my toolkit with one of the most in-demand technologies
+                on the market.
+            </p>
+        }
+
+        <button type="button" class="btn-link hero__bio-toggle" @onclick="() => ShowMore = !ShowMore">
+            @(ShowMore ? "Show less" : "Show more...")
+        </button>
+    </div>
+
+    <div class="hero__photo">
+        <img src="img/sam.png" alt="Sam Dukes"/>
+    </div>
+</section>
+
+@code {
+    private bool ShowMore { get; set; }
+}

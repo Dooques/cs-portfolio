@@ -1,28 +1,253 @@
+/* ==========================================================================
+   Fonts — self-hosted Inter (variable), no external font CDN
+   ========================================================================== */
+
+@font-face {
+    font-family: 'Inter';
+    src: url('fonts/InterVariable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('fonts/InterVariable-Italic.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* ==========================================================================
+   Design tokens
+   ========================================================================== */
+
+:root {
+    /* Light theme — cleaned-up warm palette */
+    --color-bg: #F5EFE4;
+    --color-surface: #FFFFFF;
+    --color-surface-muted: #F1E9DA;
+    --color-text: #2A1B12;
+    --color-text-muted: #6B5A4C;
+    --color-border: #E4D9C6;
+    --color-accent: #99ACFF;
+    --color-accent-hover: #7C93F2;
+    --color-accent-contrast: #1B2140;
+    --color-focus-ring: rgba(153, 172, 255, 0.35);
+
+    /* Type */
+    --font-sans: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.15rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2.25rem;
+    --font-size-3xl: 3rem;
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.6;
+
+    /* Spacing scale */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4.5rem;
+
+    /* Shape */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 18px;
+    --shadow-sm: 0 1px 2px rgba(42, 27, 18, 0.06), 0 1px 3px rgba(42, 27, 18, 0.08);
+    --shadow-md: 0 4px 12px rgba(42, 27, 18, 0.08), 0 2px 4px rgba(42, 27, 18, 0.06);
+
+    color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+    --color-bg: #211712;
+    --color-surface: #2C201A;
+    --color-surface-muted: #362720;
+    --color-text: #F3E9DD;
+    --color-text-muted: #B6A290;
+    --color-border: #453329;
+    --color-accent: #AEBCFF;
+    --color-accent-hover: #C7D1FF;
+    --color-accent-contrast: #1B2140;
+    --color-focus-ring: rgba(174, 188, 255, 0.4);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35), 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    color-scheme: dark;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #F1E8D9;
-    color: #2A1B12;
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    transition: background-color 150ms ease, color 150ms ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.01em;
+}
+
+h1:focus {
+    outline: none;
 }
 
 a, .btn-link {
-    color: #006bb7;
+    color: var(--color-accent);
+    text-decoration: none;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+a:hover, .btn-link:hover {
+    color: var(--color-accent-hover);
+    text-decoration: underline;
 }
 
 .content {
     padding-top: 1.1rem;
 }
 
-h1:focus {
+/* .page and .app-content live here rather than in MainLayout.razor.css —
+   see the comment there. */
+
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-content {
+    padding-block: var(--space-6);
+}
+
+/* ==========================================================================
+   Theme toggle — global (not CSS-isolated). It's used inside BioHeader,
+   whose own scope only reaches literal HTML in that file, not the button
+   ThemeToggle.razor renders. Kept here instead, as plain global CSS.
+   ========================================================================== */
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    font-size: var(--font-size-sm);
+    line-height: 1;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: color 150ms ease;
+}
+
+.theme-toggle:hover {
+    color: var(--color-accent);
+}
+
+.theme-toggle:focus,
+.theme-toggle:focus-visible,
+.theme-toggle:active {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.theme-toggle__label {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+/* The project screenshot carousels (.project-showcase__media) center their
+   .carousel child with flex, which never forces that child to stretch to
+   fill the available width — it shrink-to-fits instead. For a percentage-
+   width img inside, browsers fall back to the img's own intrinsic aspect
+   ratio (combined with its resolved height) to compute that shrink-to-fit
+   width, so the carousel's rendered width silently changes based on
+   whichever slide's image is active, instead of staying fixed to its
+   container. Forcing an explicit 100% here breaks that shrink-to-fit
+   calculation so the carousel always fills its box consistently.
+   Global rather than scoped: .carousel/.carousel-inner are rendered deep
+   inside Blazorise's Carousel component, not literal HTML in any of our
+   files, so a scoped rule here wouldn't reach them. */
+.project-showcase__media .carousel,
+.project-showcase__media .carousel-inner {
+    width: 100%;
+    height: 100%;
+}
+
+/* Bootstrap's carousel prev/next icons are a hardcoded white SVG, meant for
+   a dark carousel background. The project screenshot carousels sit on
+   --color-surface, which is dark in dark mode (icon stays visible) but
+   white in light mode (icon disappears) — invert just for light mode.
+   Global rather than scoped: these classes are rendered deep inside
+   Blazorise's Carousel component, not literal HTML in any of our files. */
+:root:not([data-theme='dark']) .carousel-control-prev-icon,
+:root:not([data-theme='dark']) .carousel-control-next-icon {
+    filter: invert(1);
+}
+
+/* Minimal button system — used in place of default Bootstrap button colors */
+.btn-accent {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-accent);
+    color: var(--color-accent-contrast);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-5);
+    font-weight: 500;
+    transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.btn-accent:hover {
+    background-color: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+    color: var(--color-accent-contrast);
+    text-decoration: none;
+}
+
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-5);
+    font-weight: 500;
+    transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.btn-ghost:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-muted);
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus,
+.btn-accent:focus, .btn-ghost:focus {
+    box-shadow: 0 0 0 0.2rem var(--color-focus-ring);
     outline: none;
 }
 
@@ -50,6 +275,114 @@ h1:focus {
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
+}
+
+/* Contact modal (Get in Touch). Global rather than scoped: ContactModal.razor's
+   markup is entirely Blazorise components (Modal/ModalContent/etc.), so no
+   element in the rendered modal ever carries that component's CSS-isolation
+   scope attribute — a ::deep rule there only matches by the accident of which
+   wrapper divs happen to sit in between, so it can silently apply to some
+   fields and not others. See the carousel-icon rule above for the same reason. */
+.contact-modal__content {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+/* Match .contact-modal__body's horizontal padding — Bootstrap's default
+   modal-header padding (1rem) is narrower, which left the close button
+   inset less than the form fields below it. */
+.contact-modal__header {
+    border-bottom-color: var(--color-border);
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+}
+
+.contact-modal__title {
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.contact-modal__body {
+    padding: var(--space-5);
+}
+
+/* Bootstrap's default .btn-close padding (0.25em) makes for a cramped
+   click target sitting right against the modal's edge — give it more room.
+   Margin stays at 0 (only auto on the left, to keep it pushed to the flex
+   row's right edge) so the button's own right edge sits flush with the
+   header's content edge — the same edge .contact-modal__body's padding
+   aligns to, so it lines up with the field inputs below it. */
+.contact-modal__content .btn-close {
+    padding: var(--space-3);
+    margin: 0 0 0 auto;
+}
+
+/* Bootstrap's .btn-close icon is a dark X meant for light backgrounds —
+   invert it in dark mode so it stays visible on the dark modal surface. */
+:root[data-theme='dark'] .contact-modal__content .btn-close {
+    filter: invert(1);
+}
+
+.contact-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.contact-form__row {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.contact-form__row .contact-form__field {
+    flex: 1;
+}
+
+.contact-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.contact-form__field label {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+.contact-form__input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    padding: var(--space-2) var(--space-3);
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    resize: none;
+}
+
+.contact-form__input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 0.2rem var(--color-focus-ring);
+}
+
+.contact-form > button[type='submit'] {
+    align-self: flex-start;
+    margin-top: var(--space-2);
+}
+
+@media (max-width: 640px) {
+    .contact-form__row {
+        flex-direction: column;
+    }
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {

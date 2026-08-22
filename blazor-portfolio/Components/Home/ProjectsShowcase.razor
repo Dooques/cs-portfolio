@@ -1,0 +1,31 @@
+@using System.Text.Json
+@using blazor_portfolio.Model
+@inject IHttpClientFactory ClientFactory
+
+<section class="projects-section">
+    <div class="projects-section__list">
+        @for (var i = 0; i < ProjectList.Count; i++)
+        {
+            var project = ProjectList[i];
+            <ProjectTemplate Project="@project" Reversed="@(i % 2 != 0)" @key="project.Title"/>
+        }
+    </div>
+</section>
+
+@code {
+    private List<Project> ProjectList { get; set; } = [];
+    private HttpClient HttpClient { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        HttpClient = ClientFactory.CreateClient("Client");
+        GetProjects();
+    }
+
+    private void GetProjects()
+    {
+        var projects = JsonSerializer.Deserialize<List<Project>>(
+            File.ReadAllText("Resources/projects.json")) ?? [];
+        ProjectList = projects;
+    }
+}

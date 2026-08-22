@@ -2,6 +2,7 @@
   {
     "Title": "Fighting Flow",
     "Description": "An app to help develop and expand the fighting game community, helping them to learn combos in a more efficient way.",
+    "Url": "https://fightingflow.dooques.uk",
     "TechStack": [
       "Kotlin",
       "Jetpack Compose",

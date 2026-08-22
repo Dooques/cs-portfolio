@@ -1,7 +1,7 @@
-﻿@using Hangulizer.Data
+@using Hangulizer.Data
 @using Hangulizer.Service
 
-<Column>
+<section class="project-card">
     <Heading3>
         Hangulizer
     </Heading3>
@@ -17,37 +17,31 @@
                 <MemoInput Placeholder="Type korean characters here..."
                            Rows="2"
                            @bind-Value="@HangulText"
-                           Border="Border.Dark"
                            AutoSize
                            Style="resize: none;"/>
             </FieldBody>
         </Field>
-        
+
         <Field>
             <FieldLabel>Results!</FieldLabel>
             <MemoInput Placeholder="Your translated text..."
                        Rows="2"
                        ReadOnly="true"
                        Value="@TranslatedText"
-                       Border="Border.Dark"
                        AutoSize
                        Style="resize: none;"/>
         </Field>
-        
-        <Button Margin="Margin.Is1"
-                Flex="Flex.AlignSelf.Start"
-                Color="Color.Primary"
-                Width="Width.Is25"
-                Clicked="@HandleClick">
+
+        <button type="button" class="btn-accent" style="align-self: flex-start;" @onclick="HandleClick">
             Translate Now
-        </Button>
+        </button>
     </Fields>
-</Column>
+</section>
 
 @code {
-    private string HangulText { get; set; } = "";
+    private string HangulText { get; set; } = "안녕하세요";
     private string TranslatedText { get; set; } = "";
-    private HangulTranslator HangulTranslator { get; } = 
+    private HangulTranslator HangulTranslator { get; } =
         new(HangulLibrary.Hangul);
 
     private void HandleClick()

@@ -1,74 +1,58 @@
-﻿@using blazor_portfolio.Model
-<Column Margin="Margin.Is2.FromTop">
-    <Row Margin="Margin.Is4.FromTop"
-         Flex="Flex.Row.AlignItems.Start">
-        <Column Width="Width.Is50"
-                Gap="Gap.Is3"
-                Flex="Flex.Column.JustifyContent.Start">
-            <Div>
-                <Heading3>
+@using blazor_portfolio.Model
+<div class="project-showcase @(Reversed ? "project-showcase--reverse" : "")">
+    <div class="project-showcase__details">
+        <Heading3>
+            @if (!string.IsNullOrWhiteSpace(Project.Url))
+            {
+                <a href="@Project.Url" target="_blank" rel="noopener noreferrer" class="project-showcase__title-link">
                     @Project.Title
-                </Heading3>
+                </a>
+            }
+            else
+            {
+                @Project.Title
+            }
+        </Heading3>
 
-                <Paragraph>
-                    @Project.Description
-                </Paragraph>
-            </Div>
-            
-            <Div>
-                <Heading4>
-                    Tech Stack
-                </Heading4>
+        <Paragraph>
+            @Project.Description
+        </Paragraph>
 
-                <Paragraph>
-                    @for (var i = 0; i < Project.TechStack.Count; i++)
-                    {
-                        if (i < Project.TechStack.Count - 1)
-                        {
-                            <span>@Project.TechStack[i], </span>
-                        }
-                        else
-                        {
-                            <span>@Project.TechStack[i].</span>
-                        }
-                    }
-                </Paragraph>
-            </Div>
-            
-            <Button Color="Color.Primary" To="#" hidden="hidden">Check it out!</Button>
+        <Heading4>
+            Tech Stack
+        </Heading4>
 
-        </Column>
-        <Div Width="Width.Is50"
-             @key="Project.Title">
-            <Carousel @bind-SelectedSlide="SelectedSlide"
-                      Style="max-height: 70vh; width: 100%;"
-                      Autoplay="false">
-                @if (Project.Images.Any())
+        <ul class="project-showcase__tags">
+            @foreach (var tech in Project.TechStack)
+            {
+                <li>@tech</li>
+            }
+        </ul>
+    </div>
+
+    <div class="project-showcase__media" @key="Project.Title">
+        <Carousel @bind-SelectedSlide="SelectedSlide"
+                  Autoplay="false">
+            @if (Project.Images.Any())
+            {
+                var i = 0;
+                foreach (var imageUrl in Project.Images)
                 {
-                    var i = 0;
-                    foreach (var imageUrl in Project.Images)
-                    {
-                        var index = i.ToString();
-                        <CarouselSlide Name="@index">
-                            <Image Source="@imageUrl"
-                                   Display="Display.Block"
-                                   Width="Width.Is100"
-                                   Style="max-height: 70vh; object-fit: contain"/>
-                        </CarouselSlide>
-                        i++;
-                    }
+                    var index = i.ToString();
+                    <CarouselSlide Name="@index">
+                        <img src="@imageUrl" alt="@Project.Title" class="project-showcase__image"/>
+                    </CarouselSlide>
+                    i++;
                 }
-            </Carousel>
-        </Div>
-    </Row>
-</Column>
+            }
+        </Carousel>
+    </div>
+</div>
 
 @code {
     [Parameter] public Project Project { get; set; } = new();
-    private string Title { get; set; } = "Fighting Flow";
-    private string SubTitle { get; set; } = "Practice combos from your favourite fighting game";
-    private string Description { get; set; } = "";
-    
+    [Parameter] public bool Reversed { get; set; }
+
     private string SelectedSlide { get; set; } = "0";
 
     protected override void OnParametersSet()
