@@ -29,6 +29,9 @@
     --color-surface-muted: #F1E9DA;
     --color-text: #2A1B12;
     --color-text-muted: #6B5A4C;
+    --color-heading: #4A5AC4;
+    --color-heading-hover: #3A47A0;
+    --color-heading-contrast: #FFFFFF;
     --color-border: #E4D9C6;
     --color-accent: #99ACFF;
     --color-accent-hover: #7C93F2;
@@ -72,6 +75,9 @@
     --color-surface-muted: #362720;
     --color-text: #F3E9DD;
     --color-text-muted: #B6A290;
+    --color-heading: var(--color-accent);
+    --color-heading-hover: var(--color-accent-hover);
+    --color-heading-contrast: var(--color-accent-contrast);
     --color-border: #453329;
     --color-accent: #AEBCFF;
     --color-accent-hover: #C7D1FF;
@@ -86,6 +92,22 @@
 /* ==========================================================================
    Base
    ========================================================================== */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Section-nav (SectionNav.razor) click targets. These ids live on
+   elements in different scoped components (BioHeader, Home, Contact),
+   so the offset has to live here rather than in any one .razor.css —
+   keeps each section's top edge clear of the fixed nav bar when
+   scrolled to. */
+#hero,
+#tech-stack,
+#projects,
+#contact {
+    scroll-margin-top: var(--space-8);
+}
 
 html, body {
     font-family: var(--font-sans);
@@ -133,48 +155,6 @@ a:hover, .btn-link:hover {
     padding-block: var(--space-6);
 }
 
-/* ==========================================================================
-   Theme toggle — global (not CSS-isolated). It's used inside BioHeader,
-   whose own scope only reaches literal HTML in that file, not the button
-   ThemeToggle.razor renders. Kept here instead, as plain global CSS.
-   ========================================================================== */
-
-.theme-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin-top: var(--space-3);
-    padding: 0;
-    appearance: none;
-    -webkit-appearance: none;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    background: transparent;
-    font-size: var(--font-size-sm);
-    line-height: 1;
-    color: var(--color-text-muted);
-    cursor: pointer;
-    transition: color 150ms ease;
-}
-
-.theme-toggle:hover {
-    color: var(--color-accent);
-}
-
-.theme-toggle:focus,
-.theme-toggle:focus-visible,
-.theme-toggle:active {
-    border: none;
-    outline: none;
-    box-shadow: none;
-}
-
-.theme-toggle__label {
-    text-decoration: underline;
-    text-underline-offset: 2px;
-}
-
 /* The project screenshot carousels (.project-showcase__media) center their
    .carousel child with flex, which never forces that child to stretch to
    fill the available width — it shrink-to-fits instead. For a percentage-
@@ -209,9 +189,9 @@ a:hover, .btn-link:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-accent);
-    color: var(--color-accent-contrast);
-    border: 1px solid var(--color-accent);
+    background-color: var(--color-heading);
+    color: var(--color-heading-contrast);
+    border: 1px solid var(--color-heading);
     border-radius: var(--radius-sm);
     padding: var(--space-2) var(--space-5);
     font-weight: 500;
@@ -219,9 +199,9 @@ a:hover, .btn-link:hover {
 }
 
 .btn-accent:hover {
-    background-color: var(--color-accent-hover);
-    border-color: var(--color-accent-hover);
-    color: var(--color-accent-contrast);
+    background-color: var(--color-heading-hover);
+    border-color: var(--color-heading-hover);
+    color: var(--color-heading-contrast);
     text-decoration: none;
 }
 

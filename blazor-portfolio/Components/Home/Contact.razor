@@ -1,5 +1,10 @@
-<section class="contact">
-    <h2 class="contact__heading">Get in Touch</h2>
+<section class="contact" id="contact">
+    <h2 class="contact__heading">Contact</h2>
+
+    <p class="contact__intro">
+        Like what you see and want to get in touch with me? Click one of my socials, or
+        send me an email.
+    </p>
 
     <div class="contact__layout">
         <ul class="contact-socials">
@@ -15,11 +20,19 @@
                     <span>GitHub</span>
                 </a>
             </li>
+            <li class="contact-socials__item">
+                <a href="https://discord.com/users/638814970548715530">
+                    <img src="img/discord.svg" alt="Discord"/>
+                    <span>Discord</span>
+                </a>
+            </li>
+            <li class="contact-socials__item">
+                <button type="button" @onclick="() => _contactModal.Open()">
+                    <img src="img/email.png" alt="Email"/>
+                    <span>Email</span>
+                </button>
+            </li>
         </ul>
-
-        <button type="button" class="btn-accent" @onclick="() => _contactModal.Open()">
-            Send me an Email
-        </button>
     </div>
 </section>
 

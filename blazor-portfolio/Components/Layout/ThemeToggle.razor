@@ -3,21 +3,19 @@
 
 <button type="button"
         class="theme-toggle"
+        role="switch"
+        aria-checked="@(IsDark ? "true" : "false")"
         title="@(IsDark ? "Switch to light mode" : "Switch to dark mode")"
         aria-label="@(IsDark ? "Switch to light mode" : "Switch to dark mode")"
         @onclick="Toggle">
-    @if (ShowLabel)
-    {
-        <span class="theme-toggle__label">
-            Click here for @(IsDark ? "light" : "dark") mode
-        </span>
-    }
-    @(IsDark ? "☀️" : "🌙")
+    <span class="theme-toggle__track">
+        <span class="theme-toggle__track-icon theme-toggle__track-icon--sun" aria-hidden="true">☀️</span>
+        <span class="theme-toggle__track-icon theme-toggle__track-icon--moon" aria-hidden="true">🌙</span>
+        <span class="theme-toggle__thumb"></span>
+    </span>
 </button>
 
 @code {
-    [Parameter] public bool ShowLabel { get; set; }
-
     private IJSObjectReference? _module;
     private bool IsDark { get; set; }
 
