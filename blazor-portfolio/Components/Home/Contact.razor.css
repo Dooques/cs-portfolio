@@ -7,7 +7,7 @@
 }
 
 .contact__heading {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-xl);
     font-weight: 600;
     color: var(--color-heading);
     margin: 0 0 var(--space-3);
@@ -45,7 +45,9 @@
     width: 4.5rem;
     padding: var(--space-2);
     border-radius: var(--radius-md);
-    background-color: var(--color-surface);
+    /* --color-tile: on dark, a visible container distinct from .contact's
+       own background; on light, matches the card by design. */
+    background-color: var(--color-tile);
     color: var(--color-text);
     text-decoration: none;
     /* Reset button chrome so the "Email" tile matches the anchor tiles. */
@@ -57,7 +59,7 @@
 
 .contact-socials__item a:hover,
 .contact-socials__item button:hover {
-    background-color: var(--color-surface-muted);
+    background-color: var(--color-border);
     transform: translateY(-2px);
     text-decoration: none;
 }

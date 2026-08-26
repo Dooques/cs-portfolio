@@ -1,63 +1,130 @@
 @using blazor_portfolio.Model
-<div class="project-showcase @(Reversed ? "project-showcase--reverse" : "")">
+@{
+    var hasVariants = Project.Variants.Count > 0;
+    var active = hasVariants
+        ? Project.Variants[SelectedVariant]
+        : new ProjectVariant
+        {
+            Description = Project.Description,
+            Links = Project.Links,
+            Highlight = Project.Highlight,
+            TechStack = Project.TechStack,
+            Images = Project.Images
+        };
+    var hasImages = active.Images.Count > 0;
+}
+<div class="project-showcase @(Reversed ? "project-showcase--reverse" : "") @(hasImages ? "" : "project-showcase--no-media")">
     <div class="project-showcase__details">
-        <Heading3>
-            @if (!string.IsNullOrWhiteSpace(Project.Url))
-            {
-                <a href="@Project.Url" target="_blank" rel="noopener noreferrer" class="project-showcase__title-link">
-                    @Project.Title
-                </a>
-            }
-            else
-            {
+        <div class="project-showcase__header">
+            <Heading3>
                 @Project.Title
+            </Heading3>
+
+            @if (active.Links.Count > 0)
+            {
+                <div class="project-showcase__links">
+                    @foreach (var link in active.Links)
+                    {
+                        @if (!string.IsNullOrWhiteSpace(link.Url))
+                        {
+                            <a href="@link.Url" target="_blank" rel="noopener noreferrer" class="project-showcase__link">@link.Label</a>
+                        }
+                        else
+                        {
+                            <span class="project-showcase__link project-showcase__link--static">@link.Label</span>
+                        }
+                    }
+                </div>
             }
-        </Heading3>
+        </div>
+
+        @if (hasVariants)
+        {
+            <div class="project-showcase__variant-toggle" role="tablist">
+                @for (var v = 0; v < Project.Variants.Count; v++)
+                {
+                    var index = v;
+                    <button type="button"
+                            role="tab"
+                            aria-selected="@(index == SelectedVariant ? "true" : "false")"
+                            class="project-showcase__variant-button @(index == SelectedVariant ? "project-showcase__variant-button--active" : "")"
+                            @onclick="() => SelectVariant(index)">
+                        @Project.Variants[index].Label
+                    </button>
+                }
+            </div>
+        }
 
         <Paragraph>
-            @Project.Description
+            @active.Description
         </Paragraph>
+
+        @if (!string.IsNullOrWhiteSpace(active.Highlight))
+        {
+            <p class="project-showcase__highlight">
+                <strong>Highlight:</strong> @active.Highlight
+            </p>
+        }
 
         <Heading4>
             Tech Stack
         </Heading4>
 
         <ul class="project-showcase__tags">
-            @foreach (var tech in Project.TechStack)
+            @foreach (var tech in active.TechStack)
             {
                 <li>@tech</li>
             }
         </ul>
     </div>
 
-    <div class="project-showcase__media" @key="Project.Title">
-        <Carousel @bind-SelectedSlide="SelectedSlide"
-                  Autoplay="false">
-            @if (Project.Images.Any())
-            {
-                var i = 0;
-                foreach (var imageUrl in Project.Images)
+    @if (hasImages)
+    {
+        <div class="project-showcase__media" @key="@($"{Project.Title}-{SelectedVariant}")">
+            <Carousel @bind-SelectedSlide="SelectedSlide"
+                      Autoplay="false">
+                @{ var i = 0; }
+                @foreach (var image in active.Images)
                 {
                     var index = i.ToString();
+                    var hasCaption = !string.IsNullOrWhiteSpace(image.Caption);
+                    var caption = hasCaption ? image.Caption : Project.Title;
                     <CarouselSlide Name="@index">
-                        <img src="@imageUrl" alt="@Project.Title" class="project-showcase__image"/>
+                        <div class="project-showcase__slide">
+                            <img src="@image.Url" alt="@caption" class="project-showcase__image @(hasCaption ? "" : "project-showcase__image--full")"
+                                 @onclick="() => _lightbox.Open(image.Url, caption!)"/>
+                            @if (hasCaption)
+                            {
+                                <p class="project-showcase__caption">@image.Caption</p>
+                            }
+                        </div>
                     </CarouselSlide>
                     i++;
                 }
-            }
-        </Carousel>
-    </div>
+            </Carousel>
+        </div>
+    }
 </div>
+
+<ImageLightbox @ref="_lightbox"/>
 
 @code {
     [Parameter] public Project Project { get; set; } = new();
     [Parameter] public bool Reversed { get; set; }
 
     private string SelectedSlide { get; set; } = "0";
+    private int SelectedVariant { get; set; }
+    private ImageLightbox _lightbox = null!;
 
     protected override void OnParametersSet()
     {
         SelectedSlide = "0";
+        SelectedVariant = 0;
     }
 
+    private void SelectVariant(int index)
+    {
+        SelectedVariant = index;
+        SelectedSlide = "0";
+    }
 }

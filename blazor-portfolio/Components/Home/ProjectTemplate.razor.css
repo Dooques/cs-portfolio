@@ -9,19 +9,80 @@
 }
 
 .project-showcase__details {
-    width: 45%;
+    width: 35%;
 }
 
-.project-showcase__title-link {
-    color: var(--color-text);
+.project-showcase__header {
+    margin: 0 0 var(--space-3);
+}
+
+.project-showcase__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-1) 0 0;
+}
+
+/* Same color/weight as .hero__role ("Samuel Dukes"), sized down for an
+   inline label rather than a name. */
+.project-showcase__link {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--color-name);
+}
+
+a.project-showcase__link {
     text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: color 150ms ease, border-color 150ms ease;
 }
 
-.project-showcase__title-link:hover {
-    color: var(--color-accent);
-    border-bottom-color: var(--color-accent);
+a.project-showcase__link:hover {
+    text-decoration: underline;
+}
+
+.project-showcase__variant-toggle {
+    display: inline-flex;
+    gap: var(--space-1);
+    margin: var(--space-3) 0 var(--space-4);
+    padding: var(--space-1);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface-muted);
+}
+
+.project-showcase__variant-button {
+    border: none;
+    background: none;
+    padding: var(--space-1) var(--space-4);
+    border-radius: var(--radius-sm);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease;
+}
+
+.project-showcase__variant-button:hover {
+    color: var(--color-text);
+}
+
+.project-showcase__variant-button--active {
+    background-color: var(--color-surface);
+    color: var(--color-heading);
+    box-shadow: var(--shadow-sm);
+}
+
+.project-showcase__highlight {
+    margin: var(--space-3) 0 var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    border-left: 3px solid var(--color-heading);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface-muted);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+}
+
+.project-showcase__highlight strong {
+    color: var(--color-heading);
 }
 
 .project-showcase__tags {
@@ -29,7 +90,7 @@
     flex-wrap: wrap;
     gap: var(--space-2);
     list-style: none;
-    margin: 0;
+    margin: var(--space-4) 0 0;
     padding: 0;
 }
 
@@ -43,21 +104,96 @@
 }
 
 .project-showcase__media {
-    width: 55%;
-    height: 500px;
+    width: 65%;
+    height: 540px;
     border-radius: var(--radius-lg);
     overflow: hidden;
     background-color: var(--color-surface);
 }
 
+/* Fixed height, not 100% — Bootstrap's .carousel-item (this div's actual
+   parent) has no explicit height of its own, so a percentage here would
+   resolve to auto instead of filling .project-showcase__media, collapsing
+   the slide down to its content's natural size. */
+.project-showcase__slide {
+    display: flex;
+    flex-direction: column;
+    height: 540px;
+}
+
+/* Narrower than its 100%-wide carousel box, and centered, so the
+   prev/next arrows (positioned by Bootstrap at the edges of that box)
+   land on the surface-colored margin on either side instead of over the
+   photo itself. An explicit height (not flex:1) — flex-basis:auto on a
+   replaced element like <img> didn't reliably stretch to fill the
+   remaining column space, leaving it far smaller than the box. */
 .project-showcase__image {
-    width: 100%;
-    height: 500px;
+    display: block;
+    width: calc(100% - 5rem);
+    height: 495px;
+    margin: 0 auto;
     object-fit: contain;
+    cursor: zoom-in;
+}
+
+/* No caption for this image (e.g. Fighting Flow's Android shots, Calico
+   LoFi) — use the full slide height instead of leaving the 45px caption
+   strip empty underneath. */
+.project-showcase__image--full {
+    height: 540px;
+}
+
+.project-showcase__caption {
+    height: 45px;
+    margin: 0;
+    padding: var(--space-2) 0;
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Bootstrap's carousel controls default to a 15%-wide click zone with the
+   icon centered in it — at typical showcase widths that center point
+   lands past the 2.5rem margin reserved above, so the icon still grazes
+   the image edge. Pinning the zone to that same 2.5rem makes the icon
+   center land in the middle of the reserved margin regardless of the
+   carousel's actual pixel width. ::deep is safe here (unlike the image
+   lightbox) because .project-showcase__media is a literal element in
+   this file wrapping the Blazorise Carousel. */
+.project-showcase__media ::deep .carousel-control-prev,
+.project-showcase__media ::deep .carousel-control-next {
+    width: 2.5rem;
+}
+
+/* Bootstrap's default dot indicators sit at the very bottom of the
+   carousel, which now collides with .project-showcase__caption occupying
+   that same space — the arrows plus the caption text already make
+   navigation clear, so drop the redundant indicator row instead of
+   fighting it for space. */
+.project-showcase__media ::deep .carousel-indicators {
+    display: none;
 }
 
 .project-showcase--reverse {
     flex-direction: row-reverse;
+}
+
+/* Pull the media box closer to whichever outer edge of the card it sits
+   against — the right edge normally, the left edge when the card is
+   reversed — instead of matching the card's full padding on that side. */
+.project-showcase__media {
+    margin-right: calc(var(--space-3) - var(--space-6));
+}
+
+.project-showcase--reverse .project-showcase__media {
+    margin-right: 0;
+    margin-left: calc(var(--space-3) - var(--space-6));
+}
+
+/* No screenshots yet for this project — let the details column take the
+   full width instead of leaving an empty media box beside it. */
+.project-showcase--no-media .project-showcase__details {
+    width: 100%;
 }
 
 @media (max-width: 768px) {

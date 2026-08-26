@@ -1,0 +1,180 @@
+.hobbies-heading {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-heading);
+    margin: 0 0 var(--space-5);
+}
+
+.hobbies-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+}
+
+/* Same card container pattern as .project-showcase / .project-card. */
+.hobby-card {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+}
+
+.hobby-card__title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 var(--space-3);
+}
+
+.hobby-card__subtitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-heading);
+    margin: var(--space-5) 0 var(--space-2);
+}
+
+.hobby-card__text {
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    margin: 0;
+}
+
+.hobby-card__aside {
+    font-size: var(--font-size-sm);
+    font-style: italic;
+    color: var(--color-text-muted);
+    margin: var(--space-2) 0 0;
+}
+
+/* Same tile pattern as .contact-socials in Contact.razor.css, stacked
+   into a column instead of a row. */
+.hobby-card__links {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.hobby-card__links a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface-muted);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.hobby-card__links a:hover {
+    background-color: var(--color-border);
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+.hobby-card__links img {
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+}
+
+.hobby-card__links span {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.hobby-card__row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-5);
+    margin: 0;
+}
+
+.hobby-card__row .hobby-card__text {
+    flex: 1 1 auto;
+}
+
+/* Wraps the title + text together as one flex item (Retro Game
+   Collector), so the image beside them — top-aligned via the row's
+   align-items: flex-start — lines up with the title itself instead of
+   with the paragraph below it. */
+.hobby-card__row-content {
+    flex: 1 1 auto;
+}
+
+.hobby-card__row-content .hobby-card__title {
+    margin: 0 0 var(--space-2);
+}
+
+.hobby-card__cover {
+    flex-shrink: 0;
+    align-self: stretch;
+    width: 11rem;
+    height: auto;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    cursor: zoom-in;
+}
+
+/* Same tile pattern as .tech-row__item in TechStackIcons.razor.css, sized
+   up to give the character art more room. */
+.hobby-card__mains {
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 640px) {
+    .hobby-card__row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hobby-card__mains {
+        justify-content: center;
+    }
+
+    .hobby-card__links {
+        align-items: center;
+    }
+}
+
+.hobby-card__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    width: 7rem;
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface-muted);
+    transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.hobby-card__main:hover {
+    transform: translateY(-2px);
+}
+
+.hobby-card__main img {
+    width: 5rem;
+    height: 5rem;
+    object-fit: contain;
+    cursor: zoom-in;
+}
+
+.hobby-card__main span {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+    line-height: 1.2;
+}
