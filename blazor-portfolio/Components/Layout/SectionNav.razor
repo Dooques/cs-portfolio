@@ -1,0 +1,62 @@
+@* Sticky scrollspy bar: hidden until the "My Journey" heading scrolls out
+   of view, then tracks which section is in view and jumps to a section
+   on click.
+   All tracking/highlighting happens in JS (sectionNav.js) via
+   IntersectionObserver — kept out of C# so scrolling doesn't round-trip
+   through the SignalR circuit on every frame. *@
+@inject IJSRuntime JsRuntime
+@implements IAsyncDisposable
+
+<nav class="section-nav" aria-label="Section navigation">
+    <a href="#hero" class="section-nav__brand">Dooques</a>
+    <div class="section-nav__end">
+        <ul class="section-nav__list">
+            @foreach (var section in Sections)
+            {
+                <li>
+                    <a href="@($"#{section.Id}")" class="section-nav__link" data-target="@section.Id">
+                        @section.Label
+                    </a>
+                </li>
+            }
+        </ul>
+        <ThemeToggle/>
+    </div>
+</nav>
+
+@code {
+    private static readonly (string Id, string Label)[] Sections =
+    [
+        ("tech-stack", "Tech Stack"),
+        ("projects", "Projects"),
+        ("contact", "Contact")
+    ];
+
+    private IJSObjectReference? _module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _module = await JsRuntime.InvokeAsync<IJSObjectReference>(
+                "import", "./js/sectionNav.js");
+            await _module.InvokeVoidAsync("init", "my-journey", Sections.Select(s => s.Id).ToArray());
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_module is not null)
+        {
+            try
+            {
+                await _module.InvokeVoidAsync("dispose");
+                await _module.DisposeAsync();
+            }
+            catch (JSDisconnectedException)
+            {
+                // Circuit already gone — nothing to clean up.
+            }
+        }
+    }
+}

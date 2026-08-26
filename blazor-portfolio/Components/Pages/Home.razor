@@ -2,15 +2,20 @@
 @using blazor_portfolio.Components.Home
 <PageTitle>Dooques: Software Developer</PageTitle>
 
+<SectionNav/>
+
 <div class="home-page">
     <div class="intro">
         <BioHeader/>
-        <TechStackIcons/>
+        <hr class="section-divider"/>
+        <div id="tech-stack">
+            <TechStackIcons/>
+        </div>
     </div>
 
     <hr class="section-divider"/>
 
-    <div class="projects-group">
+    <div class="projects-group" id="projects">
         <h2 class="projects-heading">Projects</h2>
         <div class="projects-list">
             <HangulizerProject/>

@@ -1,0 +1,74 @@
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.theme-toggle__track {
+    position: relative;
+    display: inline-block;
+    width: 4.5rem;
+    height: 2rem;
+    border-radius: 999px;
+    background-color: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.theme-toggle__track-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.theme-toggle__track-icon--sun {
+    left: 0.4rem;
+}
+
+.theme-toggle__track-icon--moon {
+    right: 0.4rem;
+}
+
+.theme-toggle__thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    box-shadow: var(--shadow-sm);
+    transition: transform 200ms ease, background-color 150ms ease;
+}
+
+/* Light mode: the thumb sits over the moon icon (inactive), leaving the
+   sun (active) exposed on the left. */
+.theme-toggle[aria-checked='false'] .theme-toggle__thumb {
+    transform: translateX(2.5rem);
+}
+
+/* Dark mode: the thumb sits over the sun icon (inactive) in its resting
+   position on the left, leaving the moon (active) exposed on the right. */
+.theme-toggle[aria-checked='true'] .theme-toggle__thumb {
+    transform: translateX(0);
+    background-color: var(--color-accent-hover);
+}
+
+.theme-toggle:hover .theme-toggle__track {
+    border-color: var(--color-accent);
+}
+
+.theme-toggle:focus-visible .theme-toggle__track {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}

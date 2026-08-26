@@ -9,6 +9,12 @@
 .contact__heading {
     font-size: var(--font-size-lg);
     font-weight: 600;
+    color: var(--color-heading);
+    margin: 0 0 var(--space-3);
+}
+
+.contact__intro {
+    font-size: var(--font-size-base);
     color: var(--color-text);
     margin: 0 0 var(--space-5);
 }
@@ -29,7 +35,8 @@
     padding: 0;
 }
 
-.contact-socials__item a {
+.contact-socials__item a,
+.contact-socials__item button {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,10 +48,15 @@
     background-color: var(--color-surface);
     color: var(--color-text);
     text-decoration: none;
+    /* Reset button chrome so the "Email" tile matches the anchor tiles. */
+    border: none;
+    font: inherit;
+    cursor: pointer;
     transition: transform 150ms ease, background-color 150ms ease, color 150ms ease;
 }
 
-.contact-socials__item a:hover {
+.contact-socials__item a:hover,
+.contact-socials__item button:hover {
     background-color: var(--color-surface-muted);
     transform: translateY(-2px);
     text-decoration: none;
