@@ -23,20 +23,32 @@
    ========================================================================== */
 
 :root {
-    /* Light theme — cleaned-up warm palette */
-    --color-bg: #F5EFE4;
-    --color-surface: #FFFFFF;
-    --color-surface-muted: #F1E9DA;
-    --color-text: #2A1B12;
-    --color-text-muted: #6B5A4C;
+    /* Light theme — palette drawn from img/sam.png: off-white stripes,
+       cream skin, deep plum outline, chestnut hair, and the periwinkle
+       backdrop, so the page's neutrals and accent tie directly to the
+       illustration rather than just approximating its colors. */
+    --color-bg: #F7F1DD;
+    /* A generic soft off-white, not one of the sampled palette swatches —
+       close to white but without the stark white-on-cream jump, and still
+       clearly distinct from --color-bg's more saturated cream. */
+    --color-surface: #FCFAF3;
+    --color-surface-muted: #F2E2B7;
+    --color-text: #241820;
+    --color-text-muted: #71382D;
     --color-heading: #4A5AC4;
     --color-heading-hover: #3A47A0;
     --color-heading-contrast: #FFFFFF;
-    --color-border: #E4D9C6;
-    --color-accent: #99ACFF;
-    --color-accent-hover: #7C93F2;
+    /* Burgundy shirt stripe from img/sam.png's color palette. */
+    --color-name: #8F174D;
+    --color-border: #D5C7A1;
+    /* Nested tiles-on-a-card (contact icons) blend into the card in light
+       mode — matches --color-surface, unlike dark mode where they get
+       their own visible container. */
+    --color-tile: #FCFAF3;
+    --color-accent: #91A4F2;
+    --color-accent-hover: #748BE5;
     --color-accent-contrast: #1B2140;
-    --color-focus-ring: rgba(153, 172, 255, 0.35);
+    --color-focus-ring: rgba(145, 164, 242, 0.35);
 
     /* Type */
     --font-sans: 'Inter', -apple-system, 'Segoe UI', sans-serif;
@@ -63,22 +75,31 @@
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 18px;
-    --shadow-sm: 0 1px 2px rgba(42, 27, 18, 0.06), 0 1px 3px rgba(42, 27, 18, 0.08);
-    --shadow-md: 0 4px 12px rgba(42, 27, 18, 0.08), 0 2px 4px rgba(42, 27, 18, 0.06);
+    --shadow-sm: 0 1px 2px rgba(36, 24, 32, 0.06), 0 1px 3px rgba(36, 24, 32, 0.08);
+    --shadow-md: 0 4px 12px rgba(36, 24, 32, 0.08), 0 2px 4px rgba(36, 24, 32, 0.06);
 
     color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-    --color-bg: #211712;
-    --color-surface: #2C201A;
-    --color-surface-muted: #362720;
-    --color-text: #F3E9DD;
+    /* Dark theme — the deep plum outline from img/sam.png anchors the
+       background here, same as it anchors --color-text in light mode,
+       so both themes' "ink" traces back to the same illustration color. */
+    --color-bg: #241820;
+    --color-surface: #2E1F28;
+    --color-surface-muted: #3A2732;
+    --color-text: #F7F1DD;
     --color-text-muted: #B6A290;
     --color-heading: var(--color-accent);
     --color-heading-hover: var(--color-accent-hover);
+    /* Lightened tint of the same shirt-stripe hue — the exact shade
+       (#8F174D) is too close to this dark background to read. */
+    --color-name: #C17F9D;
     --color-heading-contrast: var(--color-accent-contrast);
-    --color-border: #453329;
+    --color-border: #4A3040;
+    /* Distinct from --color-surface here — dark mode gets a visible tile
+       container, unlike light mode where it blends into the card. */
+    --color-tile: var(--color-surface-muted);
     --color-accent: #AEBCFF;
     --color-accent-hover: #C7D1FF;
     --color-accent-contrast: #1B2140;
@@ -103,8 +124,10 @@ html {
    keeps each section's top edge clear of the fixed nav bar when
    scrolled to. */
 #hero,
+#my-journey,
 #tech-stack,
 #projects,
+#hobbies,
 #contact {
     scroll-margin-top: var(--space-8);
 }
@@ -304,6 +327,52 @@ a:hover, .btn-link:hover {
 /* Bootstrap's .btn-close icon is a dark X meant for light backgrounds —
    invert it in dark mode so it stays visible on the dark modal surface. */
 :root[data-theme='dark'] .contact-modal__content .btn-close {
+    filter: invert(1);
+}
+
+/* Image lightbox (project screenshots). Global for the same reason as the
+   contact modal above — ImageLightbox.razor's markup is entirely Blazorise
+   components, so a scoped/::deep rule there can't reliably reach it. */
+/* .image-lightbox__content is the Class passed to <ModalContent>, which
+   Blazorise renders as .modal-content — the inner card, not the outer
+   .modal-dialog that Bootstrap actually centers via margin:auto. Widening
+   .modal-content itself just overflows past its still-constrained parent
+   dialog instead of growing it, which is what made this open off-center.
+   :has() lets us reach the actual dialog wrapper instead. */
+.modal-dialog:has(.image-lightbox__content) {
+    max-width: 95vw;
+}
+
+.image-lightbox__content {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.image-lightbox__header {
+    border-bottom: none;
+    padding: var(--space-3) var(--space-3) 0;
+}
+
+.image-lightbox__body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 var(--space-3) var(--space-3);
+}
+
+.image-lightbox__image {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: var(--radius-md);
+}
+
+.image-lightbox__content .btn-close {
+    padding: var(--space-3);
+    margin: 0 0 0 auto;
+}
+
+:root[data-theme='dark'] .image-lightbox__content .btn-close {
     filter: invert(1);
 }
 

@@ -17,6 +17,7 @@
 
 @code {
     private IJSObjectReference? _module;
+    private DotNetObjectReference<ThemeToggle>? _dotNetRef;
     private bool IsDark { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -27,8 +28,23 @@
                 "import", "./js/theme.js");
             var current = await _module.InvokeAsync<string>("getTheme");
             IsDark = current == "dark";
+
+            // This component is mounted twice (BioHeader + SectionNav) —
+            // registering here means a toggle from *either* instance
+            // calls OnThemeChanged on both, so they can't fall out of
+            // sync with each other.
+            _dotNetRef = DotNetObjectReference.Create(this);
+            await _module.InvokeVoidAsync("onThemeChange", _dotNetRef);
+
             StateHasChanged();
         }
+    }
+
+    [JSInvokable]
+    public void OnThemeChanged(string theme)
+    {
+        IsDark = theme == "dark";
+        StateHasChanged();
     }
 
     private async Task Toggle()
@@ -38,8 +54,10 @@
             return;
         }
 
-        var next = await _module.InvokeAsync<string>("toggleTheme");
-        IsDark = next == "dark";
+        // Don't set IsDark from the return value here — setTheme's
+        // notifyListeners call already invokes OnThemeChanged on this
+        // instance (and every other mounted one) once the theme lands.
+        await _module.InvokeVoidAsync("toggleTheme");
     }
 
     public async ValueTask DisposeAsync()
@@ -48,6 +66,10 @@
         {
             try
             {
+                if (_dotNetRef is not null)
+                {
+                    await _module.InvokeVoidAsync("offThemeChange", _dotNetRef);
+                }
                 await _module.DisposeAsync();
             }
             catch (JSDisconnectedException)
@@ -55,5 +77,7 @@
                 // Circuit already gone — nothing to clean up.
             }
         }
+
+        _dotNetRef?.Dispose();
     }
 }

@@ -1,0 +1,23 @@
+<Modal @ref="_modal">
+    <ModalContent Centered="true" Size="ModalSize.ExtraLarge" Class="image-lightbox__content">
+        <ModalHeader Class="image-lightbox__header">
+            <CloseButton/>
+        </ModalHeader>
+        <ModalBody Class="image-lightbox__body">
+            <img src="@_imageUrl" alt="@_imageAlt" class="image-lightbox__image"/>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
+@code {
+    private Modal _modal = null!;
+    private string _imageUrl = "";
+    private string _imageAlt = "";
+
+    public Task Open(string imageUrl, string alt)
+    {
+        _imageUrl = imageUrl;
+        _imageAlt = alt;
+        return _modal.Show();
+    }
+}

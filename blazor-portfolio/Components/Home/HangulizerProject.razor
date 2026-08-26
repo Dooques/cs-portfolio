@@ -2,40 +2,73 @@
 @using Hangulizer.Service
 
 <section class="project-card">
-    <Heading3>
-        Hangulizer
-    </Heading3>
+    <div class="project-card__header">
+        <Heading3>
+            Hangulizer
+        </Heading3>
 
-    <Paragraph>
+        <div class="project-card__links">
+            <a href="https://github.com/Dooques/Hangulizer" target="_blank" rel="noopener noreferrer" class="project-card__link">GitHub Repository</a>
+        </div>
+    </div>
+
+    <Paragraph Class="project-card__paragraph">
         This project is a .NET console application that translates Korean characters into english phonetics.
     </Paragraph>
 
-    <Fields Flex="Flex.Column" Margin="Margin.Is0.OnX">
-        <Field>
-            <FieldLabel>Translate hangul characters!</FieldLabel>
-            <FieldBody>
-                <MemoInput Placeholder="Type korean characters here..."
+    <div class="project-card__fields">
+        <Fields Flex="Flex.Column" Margin="Margin.Is0.OnX">
+            <Field>
+                <FieldLabel>Translate hangul characters!</FieldLabel>
+                <FieldBody>
+                    <MemoInput Placeholder="Type korean characters here..."
+                               Rows="2"
+                               @bind-Value="@HangulText"
+                               AutoSize
+                               Style="resize: none;"/>
+                </FieldBody>
+            </Field>
+
+            <Field>
+                <FieldLabel>Results!</FieldLabel>
+                <MemoInput Placeholder="Your translated text..."
                            Rows="2"
-                           @bind-Value="@HangulText"
+                           ReadOnly="true"
+                           Value="@TranslatedText"
                            AutoSize
                            Style="resize: none;"/>
-            </FieldBody>
-        </Field>
+            </Field>
 
-        <Field>
-            <FieldLabel>Results!</FieldLabel>
-            <MemoInput Placeholder="Your translated text..."
-                       Rows="2"
-                       ReadOnly="true"
-                       Value="@TranslatedText"
-                       AutoSize
-                       Style="resize: none;"/>
-        </Field>
+            <button type="button" class="btn-accent" style="align-self: flex-start;" @onclick="HandleClick">
+                Translate Now
+            </button>
+        </Fields>
+    </div>
 
-        <button type="button" class="btn-accent" style="align-self: flex-start;" @onclick="HandleClick">
-            Translate Now
-        </button>
-    </Fields>
+    <hr class="project-card__divider"/>
+
+    <Heading4>
+        Description
+    </Heading4>
+
+    <Paragraph Class="project-card__paragraph">
+        A console app that converts Korean characters into their English phonetic equivalents, making it
+        easier to sound out Korean text without knowing the alphabet. Started while learning the Korean
+        alphabet myself, and its logical structure made it a great candidate for a side project.
+    </Paragraph>
+
+    <p class="project-card__highlight">
+        <strong>Highlight:</strong> an opportunity to dig into C# syntax and Unicode, since Korean
+        characters are built from compound components that decompose into individual sounds.
+    </p>
+
+    <Heading4>
+        Tech Stack
+    </Heading4>
+
+    <ul class="project-card__tags">
+        <li>C#</li>
+    </ul>
 </section>
 
 @code {

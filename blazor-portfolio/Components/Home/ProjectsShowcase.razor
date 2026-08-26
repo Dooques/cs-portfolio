@@ -7,7 +7,7 @@
         @for (var i = 0; i < ProjectList.Count; i++)
         {
             var project = ProjectList[i];
-            <ProjectTemplate Project="@project" Reversed="@(i % 2 != 0)" @key="project.Title"/>
+            <ProjectTemplate Project="@project" Reversed="@(project.Reversed ?? (i % 2 != 0))" @key="project.Title"/>
         }
     </div>
 </section>

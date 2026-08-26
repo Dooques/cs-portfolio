@@ -1,40 +1,107 @@
-﻿[
+[
+  {
+    "Title": "After School Club Management System",
+    "Description": "A custom system built for a real after-school club in Bethnal Green, handling bookings, invoicing, daily registers (with allergy alerts), staff rotas, and secure messaging between staff and parents. Built as three connected apps, one each for parents, staff, and admins, with different access levels for each.",
+    "Highlight": "Three role-gated apps (parent/staff/admin) sharing one component library, with per-role data access enforced at the database level using Supabase Row-Level Security.",
+    "Links": [
+      { "Label": "Private Repository" }
+    ],
+    "TechStack": [
+      "React",
+      "TypeScript",
+      "Supabase"
+    ],
+    "Images": []
+  },
   {
     "Title": "Fighting Flow",
-    "Description": "An app to help develop and expand the fighting game community, helping them to learn combos in a more efficient way.",
-    "Url": "https://fightingflow.dooques.uk",
-    "TechStack": [
-      "Kotlin",
-      "Jetpack Compose",
-      "Firebase",
-      "Firestore",
-      "Android",
-      "Retrofit"
-    ],
-    "Images": [
-      "img/project/ff-image-1.png",
-      "img/project/ff-image-2.png",
-      "img/project/ff-image-3.png",
-      "img/project/ff-image-4.png"
+    "Reversed": false,
+    "Variants": [
+      {
+        "Label": "Android",
+        "Description": "A native Android app that brings the fighting game community together, letting players find and practise combos from across different games and platforms in one place instead of hunting through scattered websites.",
+        "Links": [
+          { "Label": "GitHub Repository", "Url": "https://github.com/Dooques/FightingFlow" }
+        ],
+        "TechStack": [
+          "Kotlin",
+          "Jetpack Compose",
+          "Firebase"
+        ],
+        "Images": [
+          { "Url": "img/project/ff-image-1.png" },
+          { "Url": "img/project/ff-image-2.png" },
+          { "Url": "img/project/ff-image-3.png" },
+          { "Url": "img/project/ff-image-4.png" }
+        ]
+      },
+      {
+        "Label": "Web",
+        "Description": "A Blazor Server web app for browsing fighting-game rosters and building or managing your own combos in the browser. Sign in with Google to save and edit your fighters' move lists and combos.",
+        "Links": [
+          { "Label": "Live Site", "Url": "https://fightingflow.dooques.uk" },
+          { "Label": "GitHub Repository", "Url": "https://github.com/Dooques/fighting-flow-dotnet" }
+        ],
+        "TechStack": [
+          "C#",
+          "Blazor Server",
+          "Firebase",
+          "Firestore",
+          "Supabase"
+        ],
+        "Images": [
+          { "Url": "img/project/ff-blazor-1.png", "Caption": "Home" },
+          { "Url": "img/project/ff-blazor-2.png", "Caption": "Combo Editor" },
+          { "Url": "img/project/ff-blazor-3.png", "Caption": "Combo Viewer" }
+        ]
+      }
     ]
   },
   {
-    "Title": "Calico Lo-Fi",
-    "Description": "Developed an app for listening to Lo-Fi Music while tracking your time working on projects",
+    "Title": "Calico LoFi",
+    "Reversed": true,
+    "Description": "A focus-timer web app born from wanting to track working hours while listening to chill lo-fi music in the background. It plays music pulled in via the YouTube API and keeps a running timer of time worked. Built as a group project using Agile frameworks and paired programming, as the culmination of 3 months learning .NET and Blazor.",
+    "Highlight": "Built the JWT cookie authentication system for this group project. Tracked down a stubborn bug where the cookie wasn't passing through the JavaScript interop layer, and traced it to an uppercase/lowercase mismatch in a JWT claims key.",
+    "Links": [
+      { "Label": "GitHub Repository", "Url": "https://github.com/NC-Group1/lofi-frontend" }
+    ],
     "TechStack": [
       "C#",
-      "Blazor",
       "ASP.NET",
-      "Microsoft SQL Server",
-      "SQLite",
-      "Supabase Authentication",
-      "Javascript Interop",
-      "Youtube API"
+      "SQL Server"
     ],
     "Images": [
-      "img/project/calico-image-1.png",
-      "img/project/calico-image-2.png",
-      "img/project/calico-image-3.png"
+      { "Url": "img/project/calico-image-1.png" },
+      { "Url": "img/project/calico-image-2.png" },
+      { "Url": "img/project/calico-image-3.png" }
     ]
+  },
+  {
+    "Title": "JobTracker",
+    "Description": "A personal daily job-search assistant. It reads my CV, pulls in live job listings from several job boards, scores each one against my CV so I can see the best matches first, and tracks which jobs I've saved, applied to, or dismissed, all in a dashboard that updates automatically every day.",
+    "Highlight": "Scoring engine weights CV keywords against listings rather than doing simple exact-match filtering, so results are ranked by relevance, not just keyword presence.",
+    "Links": [
+      { "Label": "GitHub Repository", "Url": "https://github.com/Dooques/JobTracker" }
+    ],
+    "TechStack": [
+      "C#",
+      ".NET",
+      "SQLite"
+    ],
+    "Images": []
+  },
+  {
+    "Title": "NoteBoy",
+    "Description": "A Windows desktop app that records a call or meeting, mixing your microphone with whatever sound is playing on your computer, into a single audio file, then transcribes it to text automatically. Built out of needing a reliable backup of meeting transcriptions for when the official recording software fails. Everything runs offline on your own machine, with no cloud services involved.",
+    "Highlight": "Mixes two live audio streams (system + mic) in real time before transcription, and does the whole pipeline offline with no cloud API calls.",
+    "Links": [
+      { "Label": "GitHub Repository", "Url": "https://github.com/Dooques/NoteBoy" }
+    ],
+    "TechStack": [
+      "C#",
+      ".NET",
+      "WinForms"
+    ],
+    "Images": []
   }
 ]

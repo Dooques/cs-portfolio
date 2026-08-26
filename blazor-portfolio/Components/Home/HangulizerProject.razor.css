@@ -5,6 +5,91 @@
     background-color: var(--color-surface);
 }
 
+.project-card__header {
+    margin: 0 0 var(--space-3);
+}
+
+.project-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-1) 0 0;
+}
+
+/* Same color/weight as .hero__role ("Samuel Dukes"), sized down for an
+   inline label rather than a name. */
+.project-card__link {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--color-name);
+    text-decoration: none;
+}
+
+.project-card__link:hover {
+    text-decoration: underline;
+}
+
+/* Heading3/Paragraph/Fields are Blazorise components, so their rendered
+   markup doesn't carry this file's scope attribute — ::deep is needed to
+   reach past that boundary, same as the textarea overrides below. h3's
+   own margin is dropped in favor of .project-card__header's — h3 now
+   sits inside that flex row, which doesn't let margins collapse through
+   to affect spacing the way a direct child's would. */
+.project-card ::deep h3 {
+    margin: 0;
+}
+
+.project-card ::deep h4 {
+    margin: 0 0 var(--space-3);
+}
+
+.project-card ::deep .project-card__paragraph {
+    margin: 0 0 var(--space-4);
+}
+
+.project-card__fields {
+    margin: 0 0 var(--space-4);
+}
+
+.project-card__divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--space-5) 0;
+    opacity: 1;
+}
+
+.project-card__highlight {
+    margin: var(--space-3) 0 var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    border-left: 3px solid var(--color-heading);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface-muted);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+}
+
+.project-card__highlight strong {
+    color: var(--color-heading);
+}
+
+.project-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+}
+
+.project-card__tags li {
+    padding: var(--space-1) var(--space-3);
+    border-radius: 999px;
+    background-color: var(--color-surface-muted);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
 .project-card ::deep textarea {
     border: 1px solid var(--color-border) !important;
     border-radius: var(--radius-sm) !important;
