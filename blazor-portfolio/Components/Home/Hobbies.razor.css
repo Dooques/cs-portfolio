@@ -98,16 +98,24 @@
     flex: 1 1 auto;
 }
 
-/* Wraps the title + text together as one flex item (Retro Game
-   Collector), so the image beside them — top-aligned via the row's
-   align-items: flex-start — lines up with the title itself instead of
+/* Wraps the title/subtitle + text together as one flex item, so the
+   image/links beside them — top-aligned via the row's
+   align-items: flex-start — line up with the heading itself instead of
    with the paragraph below it. */
 .hobby-card__row-content {
     flex: 1 1 auto;
 }
 
-.hobby-card__row-content .hobby-card__title {
+.hobby-card__row-content .hobby-card__title,
+.hobby-card__row-content .hobby-card__subtitle {
     margin: 0 0 var(--space-2);
+}
+
+/* Subtitle's usual top margin (for spacing after a preceding block) is
+   dropped above since it now lives inside a row; put that spacing on
+   the row itself when it follows another row instead. */
+.hobby-card__row + .hobby-card__row {
+    margin-top: var(--space-5);
 }
 
 .hobby-card__cover {
