@@ -1,31 +1,26 @@
-FROM alpine:latest
+# ---- Build stage ----
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS build
+WORKDIR /src
 
-# Install .NET 10 runtime dependencies
-RUN apk add --no-cache \
-    bash \
-    wget \
-    ca-certificates \
-    icu-libs \
-    libgcc \
-    libstdc++ \
-    zlib \
-    openssl
+# Copy solution and project file(s) first for better layer caching
+COPY *.sln ../
+COPY *.csproj .
+RUN dotnet restore
 
-# Download and install .NET 10 aspnetcore runtime
-RUN mkdir -p /usr/local/bin/dotnet && \
-    wget -q https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/10.0.9/aspnetcore-runtime-10.0.9-linux-musl-x64.tar.gz -O /tmp/dotnet.tar.gz && \
-    tar -xzf /tmp/dotnet.tar.gz -C /usr/local/bin/dotnet && \
-    rm /tmp/dotnet.tar.gz
+# Copy the rest of the source and publish
+COPY . .
+RUN dotnet publish -c Release -o /app/publish --no-restore
 
+# ---- Runtime stage ----
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS runtime
 WORKDIR /app
-COPY publish .
+COPY --from=build /app/publish .
 
 EXPOSE 8080
-ENV ASPNETCORE_HTTP_PORT=8080
+ENV ASPNETCORE_HTTP_PORTS=8080
 ENV DOTNET_EnableDiagnostics=0
-ENV PATH="/usr/local/bin/dotnet:$PATH"
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=30 \
-    CMD wget -q -O - http://localhost:5000/health || exit 1
+    CMD wget -q -O - http://localhost:8080/health || exit 1
 
-ENTRYPOINT ["/usr/local/bin/dotnet/dotnet", "blazor-portfolio.dll"]
+ENTRYPOINT ["dotnet", "blazor-portfolio.dll"]
