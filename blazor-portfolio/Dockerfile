@@ -10,7 +10,8 @@ RUN dotnet restore
 # Copy the rest of the source and publish
 COPY . .
 RUN dotnet publish -c Release -o /app/publish --no-restore
-RUN ls -la /app/publish/wwwroot/_framework/ || echo "‼️ _framework folder missing or empty"
+RUN echo "--- _framework contents ---" && ls -la /app/publish/wwwroot/_framework/ 2>&1 || echo "‼️ _framework missing"
+RUN echo "--- staticwebassets manifest ---" && ls -la /app/publish/*.staticwebassets.endpoints.json 2>&1 || echo "‼️ manifest missing"
 
 # ---- Runtime stage ----
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS runtime
