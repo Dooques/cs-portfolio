@@ -1,3 +1,16 @@
+# ---- Build stage ----
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS build
+WORKDIR /src
+
+# Copy solution and project file(s) first for better layer caching
+COPY *.sln ../
+COPY *.csproj .
+RUN dotnet restore
+
+# Copy the rest of the source and publish
+COPY . .
+RUN dotnet publish -c Release -o /app/publish --no-restore
+
 # ---- Runtime stage ----
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS runtime
 WORKDIR /app
