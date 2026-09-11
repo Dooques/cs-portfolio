@@ -10,6 +10,7 @@ RUN dotnet restore
 # Copy the rest of the source and publish
 COPY . .
 RUN dotnet publish -c Release -o /app/publish --no-restore
+RUN ls -la /app/publish/wwwroot/_framework/ || echo "‼️ _framework folder missing or empty"
 
 # ---- Runtime stage ----
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS runtime
