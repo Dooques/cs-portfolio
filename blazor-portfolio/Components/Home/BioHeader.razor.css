@@ -1,6 +1,6 @@
 .hero {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
     gap: var(--space-7);
@@ -8,8 +8,21 @@
 }
 
 .hero__text {
+    display: flex;
+    flex-direction: column;
     flex: 1 1 auto;
     min-width: 0;
+}
+
+.hero__withImage {
+    display: flex;
+    flex-direction: row;
+}
+
+.hero__contact {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-7);
 }
 
 .hero__header {
@@ -39,6 +52,15 @@
     font-size: var(--font-size-base);
     color: var(--color-text);
     margin: 0 0 var(--space-3);
+}
+
+.hero__contact-line a {
+    color: var(--color-heading);
+    font-weight: bold;
+}
+
+.hero__contact-line a:hover {
+    color: var(--color-heading-hover);
 }
 
 .hero__divider {
@@ -88,10 +110,16 @@
 
 @media (max-width: 640px) {
     .hero {
-        flex-direction: column-reverse;
+        flex-direction: column;
         align-items: center;
         text-align: center;
         gap: var(--space-5);
+    }
+
+    .hero__withImage {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: var(--space-4);
     }
 
     .hero__photo {
